@@ -5,14 +5,17 @@
  */
 package Vista;
 
+import java.awt.BorderLayout;
+import javax.swing.JOptionPane;
+
 /**
  *
- * @author brand
+ * @author ADONAY-MUNGUIA
  */
 public class FormInicio extends javax.swing.JFrame {
 
     /**
-     * Creates new form FormInicio
+     * Creates new form GestionBarSystem
      */
     public FormInicio() {
         initComponents();
@@ -27,21 +30,145 @@ public class FormInicio extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jMenuItem1 = new javax.swing.JMenuItem();
+        DesktopContent = new javax.swing.JDesktopPane();
+        jMenuBar2 = new javax.swing.JMenuBar();
+        jMenu5 = new javax.swing.JMenu();
+        opUsuarios = new javax.swing.JMenuItem();
+        opCategoria = new javax.swing.JMenuItem();
+        jmProductos = new javax.swing.JMenu();
+        opAgregarProd = new javax.swing.JMenuItem();
+        opAdminProd = new javax.swing.JMenuItem();
+        jmVentas = new javax.swing.JMenu();
+        opRealizarVenta = new javax.swing.JMenuItem();
+        opModificarVenta = new javax.swing.JMenuItem();
+        MenuAcercaDe = new javax.swing.JMenu();
+        MenuSalir = new javax.swing.JMenu();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        jMenuItem1.setText("jMenuItem1");
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(1095, 760));
+        setSize(new java.awt.Dimension(1095, 760));
+
+        DesktopContent.setMinimumSize(new java.awt.Dimension(1068, 685));
+        DesktopContent.setLayout(new java.awt.BorderLayout());
+        getContentPane().add(DesktopContent, java.awt.BorderLayout.CENTER);
+
+        jMenuBar2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        jMenu5.setText("Opciones Bar");
+
+        opUsuarios.setText("Usuarios");
+        jMenu5.add(opUsuarios);
+
+        opCategoria.setText("Categorías");
+        jMenu5.add(opCategoria);
+
+        jmProductos.setText("Productos");
+
+        opAgregarProd.setText("Agregar productos");
+        jmProductos.add(opAgregarProd);
+
+        opAdminProd.setText("Mantenimiento de productos");
+        jmProductos.add(opAdminProd);
+
+        jMenu5.add(jmProductos);
+
+        jmVentas.setText("Ventas");
+
+        opRealizarVenta.setText("Realizar ventas");
+        opRealizarVenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                opRealizarVentaActionPerformed(evt);
+            }
+        });
+        jmVentas.add(opRealizarVenta);
+
+        opModificarVenta.setText("Modificar ventas");
+        opModificarVenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                opModificarVentaActionPerformed(evt);
+            }
+        });
+        jmVentas.add(opModificarVenta);
+
+        jMenu5.add(jmVentas);
+
+        jMenuBar2.add(jMenu5);
+
+        MenuAcercaDe.setText("Acerca de...");
+        MenuAcercaDe.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                MenuAcercaDeMouseClicked(evt);
+            }
+        });
+        MenuAcercaDe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuAcercaDeActionPerformed(evt);
+            }
+        });
+        jMenuBar2.add(MenuAcercaDe);
+
+        MenuSalir.setText("Salir");
+        MenuSalir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                MenuSalirMouseClicked(evt);
+            }
+        });
+        jMenuBar2.add(MenuSalir);
+
+        setJMenuBar(jMenuBar2);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void MenuAcercaDeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuAcercaDeMouseClicked
+        FormIntegrantes Inte1 = new FormIntegrantes();
+        Inte1.setSize(1068, 685);
+        Inte1.setLocation(0, 0);
+        
+        DesktopContent.removeAll();
+        DesktopContent.add(Inte1, BorderLayout.CENTER);
+        DesktopContent.revalidate();
+        DesktopContent.repaint();// TODO add your handling code here:
+    }//GEN-LAST:event_MenuAcercaDeMouseClicked
+
+    private void MenuAcercaDeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAcercaDeActionPerformed
+
+    }//GEN-LAST:event_MenuAcercaDeActionPerformed
+
+    private void MenuSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuSalirMouseClicked
+        String botones[] = {"Cerrar","Cancelar"};
+        int eleccion = JOptionPane.showOptionDialog(this, "Desea cerrar la aplicacion?", "Titulo", 0, 0, null, botones, this);
+        if(eleccion == JOptionPane.YES_OPTION){
+            System.exit(0);
+        }
+        else if(eleccion == JOptionPane.NO_OPTION){            
+        }
+    }//GEN-LAST:event_MenuSalirMouseClicked
+
+    private void opModificarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opModificarVentaActionPerformed
+        FormAdminVentas Inte1 = new FormAdminVentas();
+        Inte1.setSize(1068, 685);
+        Inte1.setLocation(0, 0);
+        
+        DesktopContent.removeAll();
+        DesktopContent.add(Inte1, BorderLayout.CENTER);
+        DesktopContent.revalidate();
+        DesktopContent.repaint();//
+    }//GEN-LAST:event_opModificarVentaActionPerformed
+
+    private void opRealizarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opRealizarVentaActionPerformed
+        FormRealizarVentas Inte1 = new FormRealizarVentas();
+        Inte1.setSize(1068, 685);
+        Inte1.setLocation(0, 0);
+        
+        DesktopContent.removeAll();
+        DesktopContent.add(Inte1, BorderLayout.CENTER);
+        DesktopContent.revalidate();
+        DesktopContent.repaint();//
+    }//GEN-LAST:event_opRealizarVentaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -69,6 +196,7 @@ public class FormInicio extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(FormInicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -79,5 +207,19 @@ public class FormInicio extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JDesktopPane DesktopContent;
+    private javax.swing.JMenu MenuAcercaDe;
+    private javax.swing.JMenu MenuSalir;
+    private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenuBar jMenuBar2;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenu jmProductos;
+    private javax.swing.JMenu jmVentas;
+    private javax.swing.JMenuItem opAdminProd;
+    private javax.swing.JMenuItem opAgregarProd;
+    private javax.swing.JMenuItem opCategoria;
+    private javax.swing.JMenuItem opModificarVenta;
+    private javax.swing.JMenuItem opRealizarVenta;
+    private javax.swing.JMenuItem opUsuarios;
     // End of variables declaration//GEN-END:variables
 }

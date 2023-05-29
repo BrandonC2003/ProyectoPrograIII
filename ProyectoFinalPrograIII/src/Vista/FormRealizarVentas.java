@@ -9,12 +9,12 @@ package Vista;
  *
  * @author brand
  */
-public class FormAdminVentas extends javax.swing.JPanel {
+public class FormRealizarVentas extends javax.swing.JPanel {
 
     /**
-     * Creates new form FormAdminVentas
+     * Creates new form FormRealizarVentas
      */
-    public FormAdminVentas() {
+    public FormRealizarVentas() {
         initComponents();
     }
 
