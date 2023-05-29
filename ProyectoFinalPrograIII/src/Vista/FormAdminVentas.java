@@ -43,6 +43,11 @@ public class FormAdminVentas extends javax.swing.JPanel {
         setBackground(new java.awt.Color(0, 0, 0));
 
         btnSelectVenta2.setText("Seleccionar Venta");
+        btnSelectVenta2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSelectVenta2ActionPerformed(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
@@ -137,6 +142,12 @@ public class FormAdminVentas extends javax.swing.JPanel {
                 .addGap(40, 40, 40))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnSelectVenta2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectVenta2ActionPerformed
+        FormBuscarVenta bv = new FormBuscarVenta();
+        
+        bv.setVisible(true);
+    }//GEN-LAST:event_btnSelectVenta2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
