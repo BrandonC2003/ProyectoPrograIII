@@ -5,6 +5,7 @@
  */
 package Vista;
 
+import java.awt.Color;
 import javax.swing.JOptionPane;
 
 /**
@@ -37,59 +38,128 @@ public class FormLogin extends javax.swing.JFrame {
         txtUsuario = new javax.swing.JTextField();
         txtContra = new javax.swing.JPasswordField();
         jLabel3 = new javax.swing.JLabel();
-        btnIniciar = new javax.swing.JButton();
-        btnCerrar = new javax.swing.JButton();
+        Background = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        btnIniciar = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        btnIniciar1 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        btnSalir = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 0, 0));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        setMinimumSize(new java.awt.Dimension(400, 300));
-        setSize(new java.awt.Dimension(400, 300));
+        setLocationByPlatform(true);
+        setMinimumSize(new java.awt.Dimension(300, 300));
+        setPreferredSize(new java.awt.Dimension(700, 150));
+        setSize(new java.awt.Dimension(300, 400));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel1.setText("Usuario:");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 100, -1, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 80, -1, -1));
 
+        jLabel2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel2.setText("Contraseña:");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 140, -1, -1));
-        getContentPane().add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 90, 150, -1));
-        getContentPane().add(txtContra, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 130, 150, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 120, -1, -1));
 
-        jLabel3.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        txtUsuario.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txtUsuario.setForeground(new java.awt.Color(153, 153, 153));
+        txtUsuario.setBorder(null);
+        getContentPane().add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 70, 220, 30));
+
+        txtContra.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txtContra.setForeground(new java.awt.Color(153, 153, 153));
+        txtContra.setBorder(null);
+        getContentPane().add(txtContra, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 110, 220, 30));
+
+        jLabel3.setFont(new java.awt.Font("Arial", 0, 36)); // NOI18N
         jLabel3.setText("Login:");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 30, -1, -1));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 10, -1, -1));
 
-        btnIniciar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        btnIniciar.setText("Iniciar");
+        Background.setBackground(new java.awt.Color(255, 255, 255));
+        Background.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/NBar4.jpg"))); // NOI18N
+        jLabel4.setPreferredSize(new java.awt.Dimension(600, 200));
+        Background.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, 290, 260));
+
+        getContentPane().add(Background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 280, -1));
+
+        btnIniciar.setBackground(new java.awt.Color(255, 0, 255));
+        btnIniciar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnIniciar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnIniciarMouseClicked(evt);
             }
-        });
-        getContentPane().add(btnIniciar, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 180, -1, -1));
-
-        btnCerrar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        btnCerrar.setText("Cerrar");
-        btnCerrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCerrarActionPerformed(evt);
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnIniciarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnIniciarMouseExited(evt);
             }
         });
-        getContentPane().add(btnCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 180, -1, -1));
+
+        jLabel5.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("Iniciar sesion");
+        jLabel5.setPreferredSize(new java.awt.Dimension(74, 30));
+        btnIniciar.add(jLabel5);
+
+        btnIniciar1.setBackground(new java.awt.Color(255, 0, 255));
+        btnIniciar1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        jLabel6.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("Iniciar sesion");
+        jLabel6.setPreferredSize(new java.awt.Dimension(74, 30));
+        btnIniciar1.add(jLabel6);
+
+        btnIniciar.add(btnIniciar1);
+
+        getContentPane().add(btnIniciar, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 170, 120, 40));
+
+        btnSalir.setBackground(new java.awt.Color(255, 0, 255));
+        btnSalir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnSalir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSalirMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnSalirMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnSalirMouseExited(evt);
+            }
+        });
+
+        jLabel7.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("Salir");
+        jLabel7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel7.setPreferredSize(new java.awt.Dimension(25, 30));
+        btnSalir.add(jLabel7);
+
+        getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 170, 120, 40));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_btnCerrarActionPerformed
+    private void btnIniciarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIniciarMouseEntered
+        btnIniciar.setBackground(Color.black);
+    }//GEN-LAST:event_btnIniciarMouseEntered
+
+    private void btnIniciarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIniciarMouseExited
+        btnIniciar.setBackground(new Color(255,0,255));
+    }//GEN-LAST:event_btnIniciarMouseExited
 
     private void btnIniciarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIniciarMouseClicked
-        String Usuario = "admin";
+         String Usuario = "admin";
         String Contraseña = "123";
-        
+
         String pass = new String(txtContra.getPassword());
-        
+
         if(txtUsuario.getText().equals(Usuario)&& pass.equals(Contraseña)){
             FormInicio inicio = new FormInicio();
             inicio.setVisible(true);
@@ -100,6 +170,19 @@ public class FormLogin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnIniciarMouseClicked
 
+    private void btnSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalirMouseClicked
+        System.exit(0); 
+    }//GEN-LAST:event_btnSalirMouseClicked
+
+    private void btnSalirMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalirMouseEntered
+        btnSalir.setBackground(Color.black);
+    }//GEN-LAST:event_btnSalirMouseEntered
+
+    private void btnSalirMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalirMouseExited
+        btnSalir.setBackground(new Color(255,0,255));
+    }//GEN-LAST:event_btnSalirMouseExited
+   
+            
     /**
      * @param args the command line arguments
      */
@@ -137,11 +220,17 @@ public class FormLogin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCerrar;
-    private javax.swing.JButton btnIniciar;
+    private javax.swing.JPanel Background;
+    private javax.swing.JPanel btnIniciar;
+    private javax.swing.JPanel btnIniciar1;
+    private javax.swing.JPanel btnSalir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPasswordField txtContra;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
