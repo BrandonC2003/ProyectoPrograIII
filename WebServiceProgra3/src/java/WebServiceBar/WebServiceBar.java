@@ -5,9 +5,13 @@
  */
 package WebServiceBar;
 
+import Logica.Conexion;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 /**
  *
@@ -22,5 +26,17 @@ public class WebServiceBar {
     @WebMethod(operationName = "hello")
     public String hello(@WebParam(name = "name") String txt) {
         return "Hello " + txt + " !";
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "probarConexionBD")
+    public String probarConexionBD() {
+        try (Connection connection = Conexion.obtenerConexion();) {
+            return "Conexion establecida correctamente";
+        } catch (SQLException e) {
+            return "Error: "+e.getMessage();
+        }
     }
 }
