@@ -10,7 +10,7 @@ import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
@@ -19,7 +19,6 @@ import java.sql.SQLException;
  */
 @WebService(serviceName = "WebServiceBar")
 public class WebServiceBar {
-
     /**
      * This is a sample web service operation
      */
@@ -27,12 +26,11 @@ public class WebServiceBar {
     public String hello(@WebParam(name = "name") String txt) {
         return "Hello " + txt + " !";
     }
-
     /**
      * Web service operation
      */
     @WebMethod(operationName = "probarConexionBD")
-    public String probarConexionBD() {
+    public String probarConexionBD(){
         try (Connection connection = Conexion.obtenerConexion();) {
             return "Conexion establecida correctamente";
         } catch (SQLException e) {
