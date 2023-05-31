@@ -23,7 +23,7 @@ public class L_DetalleVentas {
             CallableStatement llamada = conexion.prepareCall(procedimiento);
             
             //Establecer los parametros del procedimeitno almacenado
-            llamada.setInt(1,objDetalle.getIdDetalle());
+            llamada.setInt(1,objDetalle.getIdProducto());
             llamada.setInt(2,objDetalle.getCantidad());
             llamada.setString(3,objDetalle.getUsuarioInserta());
             
@@ -34,7 +34,7 @@ public class L_DetalleVentas {
             llamada.execute();
             
             //Recuperar el parametro de salida
-            llamada.getInt(confirmacion);
+            confirmacion = llamada.getInt(4);
             
             //liberar recursos
             llamada.close();
@@ -42,7 +42,7 @@ public class L_DetalleVentas {
             //si la confirmacion es 1 retornara true sino false
             return confirmacion==1 ? true : false;
         } catch (SQLException e) {
-            System.out.println("Error: "+e.getMessage());
+            System.out.println("este es el mensaje: "+e.getMessage());
             return false;
         }
     }

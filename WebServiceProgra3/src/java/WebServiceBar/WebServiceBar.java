@@ -50,8 +50,12 @@ public class WebServiceBar {
      * Web service operation
      */
     @WebMethod(operationName = "insetarDetalleVenta")
-    public boolean insetarDetalleVenta(@WebParam(name = "objDetalle") DetalleVenta objDetalle) {
-        return this.objDetalle.insertarDetalleVenta(objDetalle);
+    public boolean insetarDetalleVenta(@WebParam(name = "id") int id,@WebParam(name = "cantidad") int cantidad,@WebParam(name = "usuario") String usuario) {
+        DetalleVenta detalle = new DetalleVenta();
+        detalle.setIdProducto(id);
+        detalle.setCantidad(cantidad);
+        detalle.setUsuarioInserta(usuario);
+        return this.objDetalle.insertarDetalleVenta(detalle);
     }
     
 }
