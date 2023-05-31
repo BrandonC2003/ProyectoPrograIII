@@ -8,6 +8,10 @@ import Modelos.DetalleVenta;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -119,5 +123,46 @@ public class L_DetalleVentas {
             System.out.println("Error: "+e.getMessage());
             return false;
         }
+    }
+    
+    public ArrayList<DetalleVenta> obtenerDetalles(){
+        ArrayList<DetalleVenta> lista = new ArrayList<DetalleVenta>();
+        String consulta = "SELECT * From detalleVenta";
+        try(Connection conexion = Conexion.obtenerConexion()){
+            
+            Statement statement = conexion.createStatement();
+            
+            // Ejecutar la consulta y obtener el resultado en un objeto ResultSet
+            ResultSet resultSet = statement.executeQuery(consulta);
+            
+            // Recorrer el resultado y procesar los datos
+            while (resultSet.next()) {
+                DetalleVenta nuevoDetalle = new DetalleVenta();
+                
+                nuevoDetalle.setIdDetalle(resultSet.getInt("IdDetalle"));
+                nuevoDetalle.setIdProducto(resultSet.getInt("IdProducto"));
+                nuevoDetalle.setIdVenta(resultSet.getInt("IdVenta"));
+                nuevoDetalle.setCantidad(resultSet.getInt("Cantidad"));
+                nuevoDetalle.setPrecio(resultSet.getDouble("Precio"));
+                nuevoDetalle.setDescuento(resultSet.getDouble("Descuento"));
+                nuevoDetalle.setUsuarioInserta(resultSet.getString("UsuarioInserta"));
+                nuevoDetalle.setFechaInserta(resultSet.getDate("FechaInserta"));
+                nuevoDetalle.setUsuarioActualiza(resultSet.getString("UsuarioActualiza"));
+                nuevoDetalle.setFechaActualiza(resultSet.getDate("FechaActualiza"));
+                
+                lista.add(nuevoDetalle);
+            }
+            
+            // Cerrar recursos
+            resultSet.close();
+            statement.close();
+            
+            return lista;
+        }catch(SQLException e){
+            System.out.println("Error: "+e.getMessage());
+            lista = null;
+        }
+        
+        return lista;
     }
 }

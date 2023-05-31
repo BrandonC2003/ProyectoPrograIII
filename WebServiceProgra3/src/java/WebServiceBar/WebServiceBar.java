@@ -16,6 +16,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import Modelos.Ventas;
 import  Modelos.Categorias;
+import java.util.ArrayList;
 
 /**
  *
@@ -99,6 +100,14 @@ public class WebServiceBar {
     @WebMethod(operationName = "insertarCategoria")
     public boolean insertarCategoria(@WebParam(name = "objCategoria") Categorias categoria ) {
         return objCategoria.insertarCategorias(categoria);
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "obtenerDetalleVenta")
+    public ArrayList<DetalleVenta> obtenerDetalleVenta() {
+        return objDetalle.obtenerDetalles();
     }
     
     
