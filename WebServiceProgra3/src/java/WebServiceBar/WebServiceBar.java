@@ -80,6 +80,14 @@ public class WebServiceBar {
     public boolean eliminarDetalleVenta(@WebParam(name = "idDetalle") int idDetalle) {
         return objDetalle.eliminarDetalleVenta(idDetalle);
     }
+    
+     /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "confirmarVenta")
+    public boolean confirmarVenta(@WebParam(name = "usuarioInserta") String usuarioInserta) {
+        return objDetalle.confirmarVenta(usuarioInserta);
+    }
     /**
      * Este metodo sirve para insertar datos a la tabla categorias, recibe como parametro un objeto de 
      * tipo categoria del cual se utiliza la variable categoria y descripcion.
@@ -92,5 +100,6 @@ public class WebServiceBar {
     public boolean insertarCategoria(@WebParam(name = "objCategoria") Categorias categoria ) {
         return objCategoria.insertarCategorias(categoria);
     }
+    
     
 }

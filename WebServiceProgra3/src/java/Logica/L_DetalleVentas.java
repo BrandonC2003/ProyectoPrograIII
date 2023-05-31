@@ -100,4 +100,24 @@ public class L_DetalleVentas {
             return false;
         }
     }
+    
+    public boolean confirmarVenta(String usuarioInserta){
+        try(Connection conexion = Conexion.obtenerConexion();){
+            String procedimiento = "{call sp_ConfirmarVenta(?)}";
+            CallableStatement llamada = conexion.prepareCall(procedimiento);
+            
+            //establecer los parametros para el delete
+            llamada.setString(1, usuarioInserta);
+            
+            //ejecutar la llamada
+            llamada.execute();
+            
+            llamada.close();
+            
+            return true;
+        }catch(SQLException e){
+            System.out.println("Error: "+e.getMessage());
+            return false;
+        }
+    }
 }
