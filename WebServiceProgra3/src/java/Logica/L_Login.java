@@ -2,6 +2,9 @@ package Logica;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 
 
@@ -33,6 +36,37 @@ public class L_Login {
             return hashedData;
         } catch (NoSuchAlgorithmException e) {
             return null;
+        }
+    }
+    
+    public boolean login(String usuario, String clave){
+        int confirmacion = 0;
+        try (Connection conexion = Conexion.obtenerConexion();) {
+            //Preparar la llamada al procedimiento almacenado
+            String procedimiento = "call sp_Login(?, ?, ?)}";
+            CallableStatement llamada = conexion.prepareCall(procedimiento);
+            
+            //Establecer los parametros del procedimeitno almacenado
+            llamada.setString(1,usuario);
+            llamada.setString(2,clave);
+            
+            //registrar parametro de salida
+            llamada.registerOutParameter(3, java.sql.Types.INTEGER);
+            
+            //Ejecutar el procedimiento alamcenado
+            llamada.execute();
+            
+            //Recuperar el parametro de salida
+            confirmacion = llamada.getInt(3);
+            
+            //liberar recursos
+            llamada.close();
+            
+            //si la confirmacion es 1 retornara true sino false
+            return confirmacion==1 ? true : false;
+        } catch (SQLException e) {
+            System.out.println("este es el mensaje: "+e.getMessage());
+            return false;
         }
     }
 }
