@@ -5,6 +5,8 @@
  */
 package Modelos;
 
+
+
 /**
  *
  * @author brand
@@ -38,4 +40,5 @@ public class Categorias {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
+   
 }
