@@ -68,7 +68,7 @@ public class WebServiceBar {
      * Web service operation
      */
     @WebMethod(operationName = "insertarCategoria")
-    public Boolean insertarCategoria(@WebParam(name = "categoria") String categoria, @WebParam(name = "Descripcion") Descripcion Descripcion) {
+    public Boolean insertarCategoria(@WebParam(name = "categoria") String categoria, @WebParam(name = "Descripcion") String Descripcion) {
         //TODO write your implementation code here:
         return null;
     }
