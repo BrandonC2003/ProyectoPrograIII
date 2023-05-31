@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  */
 public class Conexion {
 
-    private static final String URL = "jdbc:mysql://127.0.0.1:3307/gestorbar";
+    private static final String URL = "jdbc:mysql://127.0.0.1:3307/bar1";
     private static final String USUARIO = "root";
     private static final String CONTRASEÑA = "";
     
