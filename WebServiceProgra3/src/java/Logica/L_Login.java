@@ -43,7 +43,7 @@ public class L_Login {
         int confirmacion = 0;
         try (Connection conexion = Conexion.obtenerConexion();) {
             //Preparar la llamada al procedimiento almacenado
-            String procedimiento = "call sp_Login(?, ?, ?)}";
+            String procedimiento = "{call sp_Login(?, ?, ?)}";
             CallableStatement llamada = conexion.prepareCall(procedimiento);
             
             //Establecer los parametros del procedimeitno almacenado

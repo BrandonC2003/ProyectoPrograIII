@@ -17,6 +17,7 @@ import java.sql.SQLException;
 import Modelos.Ventas;
 import  Modelos.Categorias;
 import java.util.ArrayList;
+import Logica.L_Login;
 
 /**
  *
@@ -28,10 +29,12 @@ public class WebServiceBar {
     //en esta parte se crean los objetos y posteriormente se inicializan en el constructor.
     private L_DetalleVentas objDetalle;
     private L_categorias objCategoria;
+    private L_Login objLogin;
     
     public WebServiceBar(){
         objDetalle = new L_DetalleVentas();
         objCategoria = new L_categorias();
+        objLogin = new L_Login();
     }
     /**
      * Web service operation
@@ -108,6 +111,14 @@ public class WebServiceBar {
     @WebMethod(operationName = "obtenerDetalleVenta")
     public ArrayList<DetalleVenta> obtenerDetalleVenta() {
         return objDetalle.obtenerDetalles();
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "login")
+    public boolean login(@WebParam(name = "usuario") String usuario, @WebParam(name = "clave") String clave) {
+        return objLogin.login(usuario, clave);
     }
     
     
