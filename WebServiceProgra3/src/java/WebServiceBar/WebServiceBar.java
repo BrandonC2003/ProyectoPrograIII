@@ -8,6 +8,7 @@ package WebServiceBar;
 import Logica.Conexion;
 import Modelos.DetalleVenta;
 import Logica.L_DetalleVentas;
+import Logica.L_categorias;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -28,7 +29,13 @@ public class WebServiceBar {
     
     public WebServiceBar(){
         objDetalle = new L_DetalleVentas();
+        objCategoria = new L_categorias();
     }
+    
+    private L_categorias objCategoria;
+
+    
+    
     
     @WebMethod(operationName = "hello")
     public String hello(@WebParam(name = "name") String txt) {
