@@ -23,8 +23,9 @@ public class Conexion {
         
         try{
             Class.forName("com.mysql.jdbc.Driver");
+            System.out.println("SE CONECTO A LA BASE DE DATOS...");
         }catch(ClassNotFoundException e){
-            
+            System.out.println("NO SE CONECTO A LA BASE DE DATOS: ERROR:" + e.getMessage());
         }finally{
             return DriverManager.getConnection(URL, USUARIO, CONTRASEÑA);
         }
