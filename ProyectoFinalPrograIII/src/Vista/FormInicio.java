@@ -19,6 +19,7 @@ public class FormInicio extends javax.swing.JFrame {
      */
     public FormInicio() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
