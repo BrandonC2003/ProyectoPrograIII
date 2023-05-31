@@ -26,13 +26,12 @@ public class WebServiceBar {
      * This is a sample web service operation
      */
     private L_DetalleVentas objDetalle;
+    private L_categorias objCategoria;
     
     public WebServiceBar(){
         objDetalle = new L_DetalleVentas();
         objCategoria = new L_categorias();
     }
-    
-    private L_categorias objCategoria;
 
     
     
@@ -63,6 +62,15 @@ public class WebServiceBar {
         detalle.setCantidad(cantidad);
         detalle.setUsuarioInserta(usuario);
         return this.objDetalle.insertarDetalleVenta(detalle);
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "insertarCategoria")
+    public Boolean insertarCategoria(@WebParam(name = "categoria") String categoria, @WebParam(name = "Descripcion") Descripcion Descripcion) {
+        //TODO write your implementation code here:
+        return null;
     }
     
 }
