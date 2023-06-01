@@ -86,11 +86,42 @@ public class WebServiceBar {
     }
     
      /**
-     * Web service operation
-     */
+      * Este metodo cumple la funcion de agregar los detalles de venta no confirmados, a una venta
+      * si todo esta correcto retorna true y sino retorna false
+      * @param usuarioInserta
+      * @return true | false
+      */
     @WebMethod(operationName = "confirmarVenta")
     public boolean confirmarVenta(@WebParam(name = "usuarioInserta") String usuarioInserta) {
         return objDetalle.confirmarVenta(usuarioInserta);
+    }
+    /**
+     * Este metetodo sirve para obtener los valores de la tabla de detalleVenta y la filtra por usuarios
+     * @param usuarioInserta
+     * @return ArrayList<DetalleVenta>
+     */
+    @WebMethod(operationName = "obtenerDetalleVenta")
+    public ArrayList<DetalleVenta> obtenerDetalleVenta(@WebParam(name = "usuarioInserta") String usuarioInserta) {
+        return objDetalle.obtenerDetalles(usuarioInserta);
+    }
+
+    /**
+     * Este metodo realiza la busqueda de una venta especifica y retorna una lista de objetos
+     * @param idVenta
+     * @return ArrayList<DetalleVenta>
+     */
+    @WebMethod(operationName = "buscarVenta")
+    public ArrayList<DetalleVenta> buscarVenta(@WebParam(name = "idVenta") int idVenta) {
+        return objDetalle.buscarVenta(idVenta);
+    }
+    
+    /**
+     * Este metodo obtiene todas las ventas realizadas
+     * @return ArrayList<Ventas>
+     */
+    @WebMethod(operationName = "listarVentas")
+    public ArrayList<Ventas> buscarVentas() {
+        return objDetalle.ListarVentas();
     }
     /**
      * Este metodo sirve para insertar datos a la tabla categorias, recibe como parametro un objeto de 
@@ -104,15 +135,7 @@ public class WebServiceBar {
     public boolean insertarCategoria(@WebParam(name = "objCategoria") Categorias categoria ) {
         return objCategoria.insertarCategorias(categoria);
     }
-
-    /**
-     * Web service operation
-     */
-    @WebMethod(operationName = "obtenerDetalleVenta")
-    public ArrayList<DetalleVenta> obtenerDetalleVenta() {
-        return objDetalle.obtenerDetalles();
-    }
-
+    
     /**
      * Web service operation
      */

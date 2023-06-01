@@ -5,13 +5,13 @@
  */
 package Logica;
 import Modelos.DetalleVenta;
+import Modelos.Ventas;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.time.LocalDateTime;
 
 /**
  *
@@ -125,9 +125,9 @@ public class L_DetalleVentas {
         }
     }
     
-    public ArrayList<DetalleVenta> obtenerDetalles(){
+    public ArrayList<DetalleVenta> obtenerDetalles(String usuario){
         ArrayList<DetalleVenta> lista = new ArrayList<DetalleVenta>();
-        String consulta = "SELECT * From detalleVenta";
+        String consulta = "SELECT * From detalleVenta where UsuarioInserta = '"+usuario+"' and idVenta is null;";
         try(Connection conexion = Conexion.obtenerConexion()){
             
             Statement statement = conexion.createStatement();
@@ -151,6 +151,86 @@ public class L_DetalleVentas {
                 nuevoDetalle.setFechaActualiza(resultSet.getDate("FechaActualiza"));
                 
                 lista.add(nuevoDetalle);
+            }
+            
+            // Cerrar recursos
+            resultSet.close();
+            statement.close();
+            
+            return lista;
+        }catch(SQLException e){
+            System.out.println("Error: "+e.getMessage());
+            lista = null;
+        }
+        
+        return lista;
+    }
+    
+    public ArrayList<DetalleVenta> buscarVenta(int idVenta){
+        ArrayList<DetalleVenta> lista = new ArrayList<DetalleVenta>();
+        String consulta = "SELECT * From detalleVenta where IdVenta = "+idVenta+";";
+        try(Connection conexion = Conexion.obtenerConexion()){
+            
+            Statement statement = conexion.createStatement();
+            
+            // Ejecutar la consulta y obtener el resultado en un objeto ResultSet
+            ResultSet resultSet = statement.executeQuery(consulta);
+            
+            // Recorrer el resultado y procesar los datos
+            while (resultSet.next()) {
+                DetalleVenta nuevoDetalle = new DetalleVenta();
+                
+                nuevoDetalle.setIdDetalle(resultSet.getInt("IdDetalle"));
+                nuevoDetalle.setIdProducto(resultSet.getInt("IdProducto"));
+                nuevoDetalle.setIdVenta(resultSet.getInt("IdVenta"));
+                nuevoDetalle.setCantidad(resultSet.getInt("Cantidad"));
+                nuevoDetalle.setPrecio(resultSet.getDouble("Precio"));
+                nuevoDetalle.setDescuento(resultSet.getDouble("Descuento"));
+                nuevoDetalle.setUsuarioInserta(resultSet.getString("UsuarioInserta"));
+                nuevoDetalle.setFechaInserta(resultSet.getDate("FechaInserta"));
+                nuevoDetalle.setUsuarioActualiza(resultSet.getString("UsuarioActualiza"));
+                nuevoDetalle.setFechaActualiza(resultSet.getDate("FechaActualiza"));
+                
+                lista.add(nuevoDetalle);
+            }
+            
+            // Cerrar recursos
+            resultSet.close();
+            statement.close();
+            
+            return lista;
+        }catch(SQLException e){
+            System.out.println("Error: "+e.getMessage());
+            lista = null;
+        }
+        
+        return lista;
+    }
+    
+    public ArrayList<Ventas> ListarVentas(){
+        ArrayList<Ventas> lista = new ArrayList<Ventas>();
+        String consulta = "SELECT * From ventas;";
+        try(Connection conexion = Conexion.obtenerConexion()){
+            
+            Statement statement = conexion.createStatement();
+            
+            // Ejecutar la consulta y obtener el resultado en un objeto ResultSet
+            ResultSet resultSet = statement.executeQuery(consulta);
+            
+            // Recorrer el resultado y procesar los datos
+            while (resultSet.next()) {
+                Ventas nuevaVenta = new Ventas();
+                
+                nuevaVenta.setIdVenta(resultSet.getInt("IdVenta"));
+                nuevaVenta.setMontoTotal(resultSet.getDouble("MontoTotal"));
+                nuevaVenta.setDescuentoTotal(resultSet.getDouble("DescuentoTotal"));
+                nuevaVenta.setFechaHora(resultSet.getDate("FechaHora"));
+                nuevaVenta.setUsuarioInserta(resultSet.getString("UsuarioInserta"));
+                nuevaVenta.setFechaInserta(resultSet.getDate("FechaInserta"));
+                nuevaVenta.setUsuarioActualiza(resultSet.getString("UsuarioActualiza"));
+                nuevaVenta.setFechaActualiza(resultSet.getDate("FechaActualiza"));
+                
+                lista.add(nuevaVenta);
             }
             
             // Cerrar recursos
