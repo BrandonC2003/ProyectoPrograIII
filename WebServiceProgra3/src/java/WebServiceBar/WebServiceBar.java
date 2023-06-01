@@ -18,6 +18,8 @@ import Modelos.Ventas;
 import  Modelos.Categorias;
 import java.util.ArrayList;
 import Logica.L_Login;
+import Logica.L_Productos;
+import Modelos.Productos;
 
 /**
  *
@@ -30,11 +32,13 @@ public class WebServiceBar {
     private L_DetalleVentas objDetalle;
     private L_categorias objCategoria;
     private L_Login objLogin;
+    private L_Productos objProductos;
     
     public WebServiceBar(){
         objDetalle = new L_DetalleVentas();
         objCategoria = new L_categorias();
         objLogin = new L_Login();
+        objProductos = new L_Productos();
     }
     /**
      * Web service operation
@@ -143,6 +147,54 @@ public class WebServiceBar {
     public boolean login(@WebParam(name = "usuario") String usuario, @WebParam(name = "clave") String clave) {
         return objLogin.login(usuario, clave);
     }
-    
-    
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "insertarProductos")
+    public boolean insertarProductos(@WebParam(name = "idCategoria") int idCategoria, @WebParam(name = "nombreProducto") String nombreProducto, @WebParam(name = "cantidad") int cantidad, @WebParam(name = "precioUnitario") double precioUnitario, @WebParam(name = "descuento") double descuento, @WebParam(name = "usuarioInserta") String usuarioInserta) {
+        Productos producto = new Productos();
+        producto.setIdCategoria(idCategoria);
+        producto.setNombreProducto(nombreProducto);
+        producto.setCantidad(cantidad);
+        producto.setPrecioUnitario(precioUnitario);
+        producto.setDescuento(descuento);
+        producto.setUsuarioInserta(usuarioInserta);
+        return objProductos.insertarProductos(producto);
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "modificarProducto")
+    public boolean modificarProducto(@WebParam(name = "idProducto") int idProducto,@WebParam(name = "idCategoria") int idCategoria, @WebParam(name = "nombreProducto") String nombreProducto, @WebParam(name = "cantidad") int cantidad, @WebParam(name = "precioUnitario") double precioUnitario, @WebParam(name = "descuento") double descuento, @WebParam(name = "usuarioActualiza") String usuarioActualiza) {
+        Productos producto = new Productos();
+        producto.setIdProducto(idProducto);
+        producto.setIdCategoria(idCategoria);
+        producto.setNombreProducto(nombreProducto);
+        producto.setCantidad(cantidad);
+        producto.setPrecioUnitario(precioUnitario);
+        producto.setDescuento(descuento);
+        producto.setUsuarioActualiza(usuarioActualiza);
+        return objProductos.modificarProductos(producto);
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "agregarProductos")
+    public boolean agregarProductos(@WebParam(name = "idProducto") int idProducto, @WebParam(name = "cantidad") int cantidad) {
+        Productos producto = new Productos();
+        producto.setIdProducto(idProducto);
+        producto.setCantidad(cantidad);
+        return objProductos.agregarProductos(producto);
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "listarProductos")
+    public ArrayList<Productos> listarProductos() {
+        return objProductos.listarProductos();
+    }
 }
