@@ -49,24 +49,41 @@ public class FormUsuarios extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblInformacion = new javax.swing.JTable();
 
+        setBackground(new java.awt.Color(0, 0, 0));
+
+        lblUsuario.setForeground(new java.awt.Color(255, 255, 255));
         lblUsuario.setText("Usuario");
 
+        lblNombre.setForeground(new java.awt.Color(255, 255, 255));
         lblNombre.setText("Nombre");
 
+        lblApellido.setForeground(new java.awt.Color(255, 255, 255));
         lblApellido.setText("Apellido");
 
+        lblClave.setForeground(new java.awt.Color(255, 255, 255));
         lblClave.setText("Clave");
 
+        lblTelefono.setForeground(new java.awt.Color(255, 255, 255));
         lblTelefono.setText("Telefono");
 
+        chbActivo.setBackground(new java.awt.Color(0, 0, 0));
+        chbActivo.setForeground(new java.awt.Color(255, 255, 255));
         chbActivo.setText("Activo");
 
+        chbDesactivado.setBackground(new java.awt.Color(0, 0, 0));
+        chbDesactivado.setForeground(new java.awt.Color(255, 255, 255));
         chbDesactivado.setText("Desactivado");
 
+        rbtVendedor.setBackground(new java.awt.Color(0, 0, 0));
+        rbtVendedor.setForeground(new java.awt.Color(255, 255, 255));
         rbtVendedor.setText("Vendedor");
 
+        rbtAdministrador.setBackground(new java.awt.Color(0, 0, 0));
+        rbtAdministrador.setForeground(new java.awt.Color(255, 255, 255));
         rbtAdministrador.setText("Administrador");
 
+        rbtInventariador.setBackground(new java.awt.Color(0, 0, 0));
+        rbtInventariador.setForeground(new java.awt.Color(255, 255, 255));
         rbtInventariador.setText("Inventariador");
 
         btnGuardar.setBackground(new java.awt.Color(102, 255, 255));

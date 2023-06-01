@@ -54,7 +54,7 @@ public class FormBuscarVenta extends javax.swing.JFrame {
 
         txtBuscar.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
 
-        jLabel18.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jLabel18.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(255, 255, 255));
         jLabel18.setText("Buscar");
 
