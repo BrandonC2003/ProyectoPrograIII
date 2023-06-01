@@ -42,13 +42,14 @@ public class L_categorias {
          
         try (Connection conexion = Conexion.obtenerConexion();){
  
-            String sqlCategoria = "UPDATE INTO categorias (Categoria,Descripcion) VALUES(?,?)";
+            String sqlCategoria = "UPDATE categorias set Categria = ? , Descripcion = ? where IdCategoria = ?";
             
             CallableStatement categoria = conexion.prepareCall(sqlCategoria);
             
             
             categoria.setString(1, objCategorias.getCategoria());
             categoria.setString(2, objCategorias.getDescripcion());
+            categoria.setInt(3, objCategorias.getIdCategoria());
             
             categoria.execute();
             
