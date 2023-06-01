@@ -5,7 +5,7 @@
  */
 package Modelos;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  *
@@ -20,9 +20,9 @@ public class Productos {
     private double precioUnitario;
     private double descuento;
     private String usuarioInserta;
-    private LocalDateTime fechaInserta;
+    private Date fechaInserta;
     private String usuarioActualiza;
-    private LocalDateTime fechaActualiza;
+    private Date fechaActualiza;
     
     public int getIdProducto() {
         return idProducto;
@@ -80,11 +80,11 @@ public class Productos {
         this.usuarioInserta = usuarioInserta;
     }
 
-    public LocalDateTime getFechaInserta() {
+    public Date getFechaInserta() {
         return fechaInserta;
     }
 
-    public void setFechaInserta(LocalDateTime fechaInserta) {
+    public void setFechaInserta(Date fechaInserta) {
         this.fechaInserta = fechaInserta;
     }
 
@@ -96,11 +96,11 @@ public class Productos {
         this.usuarioActualiza = usuarioActualiza;
     }
 
-    public LocalDateTime getFechaActualiza() {
+    public Date getFechaActualiza() {
         return fechaActualiza;
     }
 
-    public void setFechaActualiza(LocalDateTime fechaActualiza) {
+    public void setFechaActualiza(Date fechaActualiza) {
         this.fechaActualiza = fechaActualiza;
     }
     

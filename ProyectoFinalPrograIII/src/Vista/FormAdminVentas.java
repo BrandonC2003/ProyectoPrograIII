@@ -42,6 +42,7 @@ public class FormAdminVentas extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(0, 0, 0));
 
+        btnSelectVenta2.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         btnSelectVenta2.setText("Seleccionar Venta");
         btnSelectVenta2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -49,16 +50,18 @@ public class FormAdminVentas extends javax.swing.JPanel {
             }
         });
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Producto:");
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Cantidad:");
 
+        btnModifcar.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         btnModifcar.setText("Modificar");
 
+        btnEliminar.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         btnEliminar.setText("Eliminar");
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
@@ -74,10 +77,11 @@ public class FormAdminVentas extends javax.swing.JPanel {
         ));
         jScrollPane2.setViewportView(jTable2);
 
-        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Buscar");
 
+        btnBuscar1.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         btnBuscar1.setText("Buscar");
 
         txtProducto.setEditable(false);

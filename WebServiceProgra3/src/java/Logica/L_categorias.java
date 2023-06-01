@@ -16,7 +16,7 @@ import java.sql.Connection;
  * @author ea521
  */
 public class L_categorias {
-     public boolean insertarCategorias(Categorias categorias){
+     public boolean insertarCategorias(Categorias objCategorias){
         
         try (Connection conexion = Conexion.obtenerConexion();){
  
@@ -25,8 +25,8 @@ public class L_categorias {
             CallableStatement categoria = conexion.prepareCall(sqlCategoria);
             
             
-            categoria.setString(1, categorias.getCategoria());
-            categoria.setString(2, categorias.getDescripcion());
+            categoria.setString(1, objCategorias.getCategoria());
+            categoria.setString(2, objCategorias.getDescripcion());
             
             categoria.execute();
             
@@ -34,9 +34,57 @@ public class L_categorias {
            
             return true;
         } catch (Exception e) {
-            System.out.println("Error: "+e.getMessage());
+            System.out.println("Error: Al insertar datos. "+e.getMessage());
             return false;
         }
     }
-    
+    public boolean modificarCategoria(Categorias objCategorias){
+         
+        try (Connection conexion = Conexion.obtenerConexion();){
+ 
+            String sqlCategoria = "UPDATE categorias set Categria = ? , Descripcion = ? where IdCategoria = ?";
+            
+            CallableStatement categoria = conexion.prepareCall(sqlCategoria);
+            
+            
+            categoria.setString(1, objCategorias.getCategoria());
+            categoria.setString(2, objCategorias.getDescripcion());
+            categoria.setInt(3, objCategorias.getIdCategoria());
+            
+            categoria.execute();
+            
+            categoria.close();
+           
+            return true;
+        } catch (Exception e) {
+            System.out.println("Error: al modificar datos. "+e.getMessage());
+            return false;
+        }
+    }
+    public boolean listarCategoria(Categorias objCategorias){
+        try (Connection conexion = Conexion.obtenerConexion();){
+ 
+            String sqlCategoria = "SELECT * FROM categorias (Categoria,Descripcion) VALUES(?,?)";
+            
+            CallableStatement categoria = conexion.prepareCall(sqlCategoria);
+            
+            
+            categoria.setString(1, objCategorias.getCategoria());
+            categoria.setString(2, objCategorias.getDescripcion());
+            
+            categoria.execute();
+            
+            categoria.close();
+           
+            return true;
+        } catch (Exception e) {
+            System.out.println("Error: al modificar datos. "+e.getMessage());
+            return false;
+        }
+    }
 }
+     
+     
+     
+     
+
