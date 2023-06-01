@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package Modelos;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  *
@@ -16,12 +16,12 @@ public class Usuarios {
     private String apellido;
     private String clave;
     private String telefono;
-    private boolean estado;
+    private int estado;
     private String nivel;
     private String usuarioInserta;
-    private LocalDateTime fechaInserta;
+    private Date fechaInserta;
     private String usuarioActualiza;
-    private LocalDateTime fechaActualiza;
+    private Date fechaActualiza;
     
     public String getNombreUsuario() {
         return nombreUsuario;
@@ -63,11 +63,11 @@ public class Usuarios {
         this.telefono = Telefono;
     }
 
-    public boolean isEstado() {
+    public int isEstado() {
         return estado;
     }
 
-    public void setEstado(boolean Estado) {
+    public void setEstado(int Estado) {
         this.estado = Estado;
     }
 
@@ -87,11 +87,11 @@ public class Usuarios {
         this.usuarioInserta = UsuarioInserta;
     }
 
-    public LocalDateTime getFechaInserta() {
+    public Date getFechaInserta() {
         return fechaInserta;
     }
 
-    public void setFechaInserta(LocalDateTime FechaInserta) {
+    public void setFechaInserta(Date FechaInserta) {
         this.fechaInserta = FechaInserta;
     }
 
@@ -103,11 +103,15 @@ public class Usuarios {
         this.usuarioActualiza = UsuarioActualiza;
     }
 
-    public LocalDateTime getFechaActualiza() {
+    public Date getFechaActualiza() {
         return fechaActualiza;
     }
 
-    public void setFechaActualiza(LocalDateTime FechaActualiza) {
+    public void setFechaActualiza(Date FechaActualiza) {
         this.fechaActualiza = FechaActualiza;
+    }
+
+    public int getEstado() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
