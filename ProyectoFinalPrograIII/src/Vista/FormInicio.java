@@ -33,6 +33,8 @@ public class FormInicio extends javax.swing.JFrame {
 
         jMenuItem1 = new javax.swing.JMenuItem();
         DesktopContent = new javax.swing.JDesktopPane();
+        Background = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         jMenuBar2 = new javax.swing.JMenuBar();
         jMenu5 = new javax.swing.JMenu();
         opUsuarios = new javax.swing.JMenuItem();
@@ -48,13 +50,19 @@ public class FormInicio extends javax.swing.JFrame {
 
         jMenuItem1.setText("jMenuItem1");
 
+        DesktopContent.setMinimumSize(new java.awt.Dimension(1068, 685));
+        DesktopContent.setLayout(new java.awt.BorderLayout());
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1095, 760));
         setSize(new java.awt.Dimension(1095, 760));
 
-        DesktopContent.setMinimumSize(new java.awt.Dimension(1068, 685));
-        DesktopContent.setLayout(new java.awt.BorderLayout());
-        getContentPane().add(DesktopContent, java.awt.BorderLayout.CENTER);
+        Background.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/pexels-alex-knight-2599246.jpg"))); // NOI18N
+        Background.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, -4, 840, 630));
+
+        getContentPane().add(Background, java.awt.BorderLayout.CENTER);
 
         jMenuBar2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
@@ -208,9 +216,11 @@ public class FormInicio extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel Background;
     private javax.swing.JDesktopPane DesktopContent;
     private javax.swing.JMenu MenuAcercaDe;
     private javax.swing.JMenu MenuSalir;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuItem jMenuItem1;

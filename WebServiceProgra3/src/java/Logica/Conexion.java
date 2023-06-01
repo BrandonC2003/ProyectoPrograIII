@@ -14,8 +14,13 @@ import java.sql.DriverManager;
  * @author brand
  */
 public class Conexion {
+//<<<<<<< Updated upstream
     
-    private static final String URL = "jdbc:mysql://127.0.0.1:3307/bar1";
+  
+//=======
+
+    private static final String URL = "jdbc:mysql://127.0.0.1:3306/bar1";
+//>>>>>>> Stashed changes
     private static final String USUARIO = "root";
     private static final String CONTRASEÑA = "";
     
