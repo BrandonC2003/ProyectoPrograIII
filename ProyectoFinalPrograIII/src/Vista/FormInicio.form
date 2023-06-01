@@ -23,11 +23,17 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Usuarios"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="opUsuariosActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="opCategoria">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Categor&#xed;as"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="opCategoriaActionPerformed"/>
+              </Events>
             </MenuItem>
             <Menu class="javax.swing.JMenu" name="jmProductos">
               <Properties>
@@ -38,11 +44,17 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Agregar productos"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="opAgregarProdActionPerformed"/>
+                  </Events>
                 </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="opAdminProd">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Mantenimiento de productos"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="opAdminProdActionPerformed"/>
+                  </Events>
                 </MenuItem>
               </SubComponents>
             </Menu>

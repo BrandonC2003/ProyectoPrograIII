@@ -61,17 +61,37 @@ public class FormInicio extends javax.swing.JFrame {
         jMenu5.setText("Opciones Bar");
 
         opUsuarios.setText("Usuarios");
+        opUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                opUsuariosActionPerformed(evt);
+            }
+        });
         jMenu5.add(opUsuarios);
 
         opCategoria.setText("Categorías");
+        opCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                opCategoriaActionPerformed(evt);
+            }
+        });
         jMenu5.add(opCategoria);
 
         jmProductos.setText("Productos");
 
         opAgregarProd.setText("Agregar productos");
+        opAgregarProd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                opAgregarProdActionPerformed(evt);
+            }
+        });
         jmProductos.add(opAgregarProd);
 
         opAdminProd.setText("Mantenimiento de productos");
+        opAdminProd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                opAdminProdActionPerformed(evt);
+            }
+        });
         jmProductos.add(opAdminProd);
 
         jMenu5.add(jmProductos);
@@ -170,6 +190,50 @@ public class FormInicio extends javax.swing.JFrame {
         DesktopContent.revalidate();
         DesktopContent.repaint();//
     }//GEN-LAST:event_opRealizarVentaActionPerformed
+
+    private void opUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opUsuariosActionPerformed
+        FormUsuarios Inte1 = new FormUsuarios();
+        Inte1.setSize(1068, 685);
+        Inte1.setLocation(0, 0);
+        
+        DesktopContent.removeAll();
+        DesktopContent.add(Inte1, BorderLayout.CENTER);
+        DesktopContent.revalidate();
+        DesktopContent.repaint();//
+    }//GEN-LAST:event_opUsuariosActionPerformed
+
+    private void opCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opCategoriaActionPerformed
+       FormCategorias Inte1 = new FormCategorias();
+        Inte1.setSize(1068, 685);
+        Inte1.setLocation(0, 0);
+        
+        DesktopContent.removeAll();
+        DesktopContent.add(Inte1, BorderLayout.CENTER);
+        DesktopContent.revalidate();
+        DesktopContent.repaint();//
+    }//GEN-LAST:event_opCategoriaActionPerformed
+
+    private void opAgregarProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opAgregarProdActionPerformed
+        FormIngresarProductos Inte1 = new FormIngresarProductos();
+        Inte1.setSize(1068, 685);
+        Inte1.setLocation(0, 0);
+        
+        DesktopContent.removeAll();
+        DesktopContent.add(Inte1, BorderLayout.CENTER);
+        DesktopContent.revalidate();
+        DesktopContent.repaint();//
+    }//GEN-LAST:event_opAgregarProdActionPerformed
+
+    private void opAdminProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opAdminProdActionPerformed
+        FormAdminProductos Inte1 = new FormAdminProductos();
+        Inte1.setSize(1068, 685);
+        Inte1.setLocation(0, 0);
+        
+        DesktopContent.removeAll();
+        DesktopContent.add(Inte1, BorderLayout.CENTER);
+        DesktopContent.revalidate();
+        DesktopContent.repaint();//
+    }//GEN-LAST:event_opAdminProdActionPerformed
 
     /**
      * @param args the command line arguments

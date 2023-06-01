@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 public class FormLogin extends javax.swing.JFrame {
 
     private static final long serialVersionUID = 1L;
+    public static String nombreUsuario = null;
 
     
     public FormLogin() {
@@ -212,6 +213,7 @@ public class FormLogin extends javax.swing.JFrame {
 
         if(txtUsuario.getText().equals(Usuario)&& pass.equals(Contraseña)){
             FormInicio inicio = new FormInicio();
+            this.nombreUsuario = Usuario;
             inicio.setVisible(true);
             dispose();
         }
