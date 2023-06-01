@@ -15,7 +15,7 @@ import java.sql.SQLException;
 public class L_Login {
         
     
-    public String SHA_256(String data){
+    public static String SHA_256(String data){
         try {
             // Obtener instancia del algoritmo de hash SHA-256
             MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");

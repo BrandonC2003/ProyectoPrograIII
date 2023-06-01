@@ -19,6 +19,8 @@ import  Modelos.Categorias;
 import java.util.ArrayList;
 import Logica.L_Login;
 import Logica.L_Productos;
+import Logica.L_Usuarios;
+import Modelos.Usuarios;
 import Modelos.Productos;
 
 /**
@@ -33,12 +35,14 @@ public class WebServiceBar {
     private L_categorias objCategoria;
     private L_Login objLogin;
     private L_Productos objProductos;
+    private L_Usuarios objUsuarios;
     
     public WebServiceBar(){
         objDetalle = new L_DetalleVentas();
         objCategoria = new L_categorias();
         objLogin = new L_Login();
         objProductos = new L_Productos();
+        objUsuarios = new L_Usuarios();
     }
     /**
      * Web service operation
@@ -140,6 +144,20 @@ public class WebServiceBar {
         return objCategoria.insertarCategorias(categoria);
     }
     
+    @WebMethod(operationName = "modificarCategoria")
+    public boolean modificarCategoria(@WebParam(name = "idCategoria") int idCategoria, @WebParam( name = "categoria") String categoria, @WebParam(name="descripcion") String descripcion ) {
+        Categorias categori = new Categorias();
+        categori.setIdCategoria(idCategoria);
+        categori.setCategoria(categoria);
+        categori.setDescripcion(descripcion);
+        return objCategoria.modificarCategoria(categori);
+    }
+    
+    @WebMethod(operationName = "listarCategoria")
+    public ArrayList<Categorias>listarCategoria() {
+        
+        return objCategoria.listarCategoria();
+    }
     /**
      * Web service operation
      */
@@ -196,5 +214,47 @@ public class WebServiceBar {
     @WebMethod(operationName = "listarProductos")
     public ArrayList<Productos> listarProductos() {
         return objProductos.listarProductos();
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "agregarUsuario")
+    public boolean agregarUsuario(@WebParam(name = "nombreUsuario") String nombreUsuario, @WebParam(name = "nombre") String nombre, @WebParam(name = "apellido") String apellido, @WebParam(name = "clave") String clave, @WebParam(name = "telefono") String telefono, @WebParam(name = "estado") int estado, @WebParam(name = "nivel") String nivel) {
+        Usuarios usuario = new Usuarios();
+        usuario.setNombreUsuario(nombreUsuario);
+        usuario.setNombre(nombre);
+        usuario.setApellido(apellido);
+        usuario.setTelefono(telefono);
+        usuario.setClave(L_Login.SHA_256(clave));
+        usuario.setEstado(estado);
+        usuario.setNivel(nivel);
+        
+        return objUsuarios.agregarUsuarios(usuario);
+    }
+    
+    
+    @WebMethod(operationName = "modificarUsuario")
+    public boolean modificarUsuario(@WebParam(name = "nombreUsuario") String nombreUsuario, @WebParam(name = "nombre") String nombre, @WebParam(name = "apellido") String apellido, @WebParam(name = "clave") String clave, @WebParam(name = "telefono") String telefono, @WebParam(name = "estado") int estado, @WebParam(name = "nivel") String nivel) {
+        Usuarios usuario = new Usuarios();
+        usuario.setNombreUsuario(nombreUsuario);
+        usuario.setNombre(nombre);
+        usuario.setApellido(apellido);
+        usuario.setTelefono(telefono);
+        usuario.setClave(L_Login.SHA_256(clave));
+        usuario.setEstado(estado);
+        usuario.setNivel(nivel);
+        
+        return objUsuarios.modificarUsuario(usuario);
+    }
+    
+    @WebMethod(operationName = "listarUsuarios")
+    public ArrayList<Usuarios> listarUsuarioss(){
+        return objUsuarios.obtenerUsuarios();
+    }
+    
+    @WebMethod(operationName = "buscarUsuarios")
+    public ArrayList<Usuarios> BuscarUsuarios(@WebParam(name = "nombreUsuario") String nombreUsuario){
+        return objUsuarios.buscarUsuarios(nombreUsuario);
     }
 }
