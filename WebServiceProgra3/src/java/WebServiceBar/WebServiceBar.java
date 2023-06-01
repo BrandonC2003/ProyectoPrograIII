@@ -22,6 +22,7 @@ import Logica.L_Productos;
 import Logica.L_Usuarios;
 import Modelos.Usuarios;
 import Modelos.Productos;
+import Modelos.vwDetalleVentas;
 
 /**
  *
@@ -109,7 +110,7 @@ public class WebServiceBar {
      * @return ArrayList<DetalleVenta>
      */
     @WebMethod(operationName = "obtenerDetalleVenta")
-    public ArrayList<DetalleVenta> obtenerDetalleVenta(@WebParam(name = "usuarioInserta") String usuarioInserta) {
+    public ArrayList<vwDetalleVentas> obtenerDetalleVenta(@WebParam(name = "usuarioInserta") String usuarioInserta) {
         return objDetalle.obtenerDetalles(usuarioInserta);
     }
 
@@ -119,7 +120,7 @@ public class WebServiceBar {
      * @return ArrayList<DetalleVenta>
      */
     @WebMethod(operationName = "buscarVenta")
-    public ArrayList<DetalleVenta> buscarVenta(@WebParam(name = "idVenta") int idVenta) {
+    public ArrayList<vwDetalleVentas> buscarVenta(@WebParam(name = "idVenta") int idVenta) {
         return objDetalle.buscarVenta(idVenta);
     }
     

@@ -205,7 +205,23 @@
 
 <xs:complexType name="obtenerDetalleVentaResponse">
 <xs:sequence>
-<xs:element name="return" type="tns:detalleVenta" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="return" type="tns:vwDetalleVentas" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="vwDetalleVentas">
+<xs:sequence>
+<xs:element name="cantidad" type="xs:int"/>
+<xs:element name="descuento" type="xs:double"/>
+<xs:element name="fechaActualiza" type="xs:dateTime" minOccurs="0"/>
+<xs:element name="fechaInserta" type="xs:dateTime" minOccurs="0"/>
+<xs:element name="idDetalle" type="xs:int"/>
+<xs:element name="idProducto" type="xs:int"/>
+<xs:element name="idVenta" type="xs:int"/>
+<xs:element name="precio" type="xs:double"/>
+<xs:element name="produco" type="xs:string" minOccurs="0"/>
+<xs:element name="usuarioActualiza" type="xs:string" minOccurs="0"/>
+<xs:element name="usuarioInserta" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -354,7 +370,7 @@
 
 <xs:complexType name="buscarVentaResponse">
 <xs:sequence>
-<xs:element name="return" type="tns:detalleVenta" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="return" type="tns:vwDetalleVentas" minOccurs="0" maxOccurs="unbounded"/>
 </xs:sequence>
 </xs:complexType>
 

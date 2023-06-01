@@ -6,6 +6,7 @@
 package Logica;
 import Modelos.DetalleVenta;
 import Modelos.Ventas;
+import Modelos.vwDetalleVentas;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -124,10 +125,12 @@ public class L_DetalleVentas {
             return false;
         }
     }
-    
-    public ArrayList<DetalleVenta> obtenerDetalles(String usuario){
-        ArrayList<DetalleVenta> lista = new ArrayList<DetalleVenta>();
-        String consulta = "SELECT * From detalleVenta where UsuarioInserta = '"+usuario+"' and idVenta is null;";
+    public ArrayList<vwDetalleVentas> obtenerDetalles(String usuario){
+        ArrayList<vwDetalleVentas> lista = new ArrayList<vwDetalleVentas>();
+        String columnas = "dv.`IdDetalle`, dv.`idProducto`, p.`nombreProducto` as producto, dv.`IdVenta`, dv.`Cantidad`, dv.`Precio`, "
+                + "dv.`Descuento`,dv.`UsuarioInserta`, dv.`FechaInserta`, dv.`UsuarioActualiza`, dv.`FechaActualiza` FROM `detalleventa` dv "
+                + "INNER JOIN `productos` p ON dv.`idProducto` = p.`IdProducto`";
+        String consulta = "SELECT "+columnas+" where dv.UsuarioInserta = '"+usuario+"' and dv.idVenta is null;";
         try(Connection conexion = Conexion.obtenerConexion()){
             
             Statement statement = conexion.createStatement();
@@ -137,10 +140,11 @@ public class L_DetalleVentas {
             
             // Recorrer el resultado y procesar los datos
             while (resultSet.next()) {
-                DetalleVenta nuevoDetalle = new DetalleVenta();
+                vwDetalleVentas nuevoDetalle = new vwDetalleVentas();
                 
                 nuevoDetalle.setIdDetalle(resultSet.getInt("IdDetalle"));
                 nuevoDetalle.setIdProducto(resultSet.getInt("IdProducto"));
+                nuevoDetalle.setProduco(resultSet.getString("producto"));
                 nuevoDetalle.setIdVenta(resultSet.getInt("IdVenta"));
                 nuevoDetalle.setCantidad(resultSet.getInt("Cantidad"));
                 nuevoDetalle.setPrecio(resultSet.getDouble("Precio"));
@@ -166,9 +170,12 @@ public class L_DetalleVentas {
         return lista;
     }
     
-    public ArrayList<DetalleVenta> buscarVenta(int idVenta){
-        ArrayList<DetalleVenta> lista = new ArrayList<DetalleVenta>();
-        String consulta = "SELECT * From detalleVenta where IdVenta = "+idVenta+";";
+    public ArrayList<vwDetalleVentas> buscarVenta(int idVenta){
+        ArrayList<vwDetalleVentas> lista = new ArrayList<vwDetalleVentas>();
+        String columnas = "dv.`IdDetalle`, dv.`idProducto`, p.`nombreProducto` as producto, dv.`IdVenta`, dv.`Cantidad`, dv.`Precio`, "
+                + "dv.`Descuento`,dv.`UsuarioInserta`, dv.`FechaInserta`, dv.`UsuarioActualiza`, dv.`FechaActualiza` FROM `detalleventa` dv "
+                + "INNER JOIN `productos` p ON dv.`idProducto` = p.`IdProducto`";
+        String consulta = "SELECT "+columnas+" where dv.IdVenta = "+idVenta+";";
         try(Connection conexion = Conexion.obtenerConexion()){
             
             Statement statement = conexion.createStatement();
@@ -178,10 +185,11 @@ public class L_DetalleVentas {
             
             // Recorrer el resultado y procesar los datos
             while (resultSet.next()) {
-                DetalleVenta nuevoDetalle = new DetalleVenta();
+                vwDetalleVentas nuevoDetalle = new vwDetalleVentas();
                 
                 nuevoDetalle.setIdDetalle(resultSet.getInt("IdDetalle"));
                 nuevoDetalle.setIdProducto(resultSet.getInt("IdProducto"));
+                nuevoDetalle.setProduco(resultSet.getString("producto"));
                 nuevoDetalle.setIdVenta(resultSet.getInt("IdVenta"));
                 nuevoDetalle.setCantidad(resultSet.getInt("Cantidad"));
                 nuevoDetalle.setPrecio(resultSet.getDouble("Precio"));

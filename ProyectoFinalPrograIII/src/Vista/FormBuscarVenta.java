@@ -4,7 +4,13 @@
  * and open the template in the editor.
  */
 package Vista;
-
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import models.ITransferDtVentas;
+import webservicebar.Ventas;
+import webservicebar.WebServiceBar;
+import webservicebar.WebServiceBar_Service;
 /**
  *
  * @author brand
@@ -14,10 +20,26 @@ public class FormBuscarVenta extends javax.swing.JFrame {
     /**
      * Creates new form FormBuscarVenta
      */
-    public FormBuscarVenta() {
+    DefaultTableModel model;
+    WebServiceBar_Service servicio;
+    WebServiceBar cliente;
+    ITransferDtVentas envD;
+    public FormBuscarVenta(ITransferDtVentas envD) {
         initComponents();
+        servicio = new WebServiceBar_Service();
+        cliente = servicio.getWebServiceBarPort();
+        this.envD = envD;
+        model = new DefaultTableModel();
+        model.addColumn("IdVenta");
+        model.addColumn("Monto");
+        model.addColumn("Descuento");
+        model.addColumn("Fecha");
+        model.addColumn("Vendedor");
+        jTable1.setModel(model);
+        llenarTabla();
     }
-
+    
+    public FormBuscarVenta(){}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -30,9 +52,9 @@ public class FormBuscarVenta extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane19 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        txtBuscar = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
         btnBuscar = new javax.swing.JButton();
+        spnId = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(675, 585));
@@ -50,9 +72,12 @@ public class FormBuscarVenta extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane19.setViewportView(jTable1);
-
-        txtBuscar.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
 
         jLabel18.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(255, 255, 255));
@@ -60,6 +85,13 @@ public class FormBuscarVenta extends javax.swing.JFrame {
 
         btnBuscar.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+
+        spnId.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -70,8 +102,8 @@ public class FormBuscarVenta extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel18)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtBuscar)
+                        .addGap(18, 18, 18)
+                        .addComponent(spnId)
                         .addGap(18, 18, 18)
                         .addComponent(btnBuscar))
                     .addComponent(jScrollPane19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -82,10 +114,10 @@ public class FormBuscarVenta extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
+                        .addGap(35, 35, 35)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel18)))
+                            .addComponent(jLabel18)
+                            .addComponent(spnId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(btnBuscar)))
@@ -99,6 +131,25 @@ public class FormBuscarVenta extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        int id = Integer.parseInt((String) spnId.getValue());
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        int fila = jTable1.getSelectedRow();
+        int id = Integer.parseInt(jTable1.getValueAt(fila, 0).toString());
+        envD.transferirDatos(id);
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void llenarTabla(){
+        List<Ventas> ventas = new ArrayList<Ventas>();
+        ventas = cliente.listarVentas();
+        model.setRowCount(0);
+        for(Ventas vent : ventas){
+            model.addRow(new Object[]{vent.getIdVenta(), vent.getMontoTotal(),vent.getDescuentoTotal(),vent.getFechaHora(),vent.getUsuarioInserta()});
+        }
+        jTable1.setModel(model);
+    }
     /**
      * @param args the command line arguments
      */
@@ -140,6 +191,6 @@ public class FormBuscarVenta extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane19;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField txtBuscar;
+    private javax.swing.JSpinner spnId;
     // End of variables declaration//GEN-END:variables
 }

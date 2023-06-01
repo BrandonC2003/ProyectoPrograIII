@@ -5,19 +5,51 @@
  */
 package Vista;
 
+import javax.swing.table.DefaultTableModel;
+import models.ITransferDtVentas;
+import webservicebar.WebServiceBar_Service;
+import webservicebar.WebServiceBar;
+import webservicebar.VwDetalleVentas;
+import java.util.List;
+import java.util.ArrayList;
 /**
  *
  * @author brand
  */
-public class FormAdminVentas extends javax.swing.JPanel {
+public class FormAdminVentas extends javax.swing.JPanel implements ITransferDtVentas {
 
     /**
      * Creates new form FormAdminVentas
      */
+    DefaultTableModel model;
+    WebServiceBar_Service servicio;
+    WebServiceBar cliente;
     public FormAdminVentas() {
         initComponents();
+        servicio = new WebServiceBar_Service();
+        cliente = servicio.getWebServiceBarPort();
+        model = new DefaultTableModel();
+        model.addColumn("idDetalle");
+        model.addColumn("idProducto");
+        model.addColumn("Producto");
+        model.addColumn("idVenta");
+        model.addColumn("Precio");
+        model.addColumn("Descuento");
+        jTable2.setModel(model);
     }
 
+    @Override
+    public void transferirDatos(int id) {
+        List<VwDetalleVentas> detalles = new ArrayList<VwDetalleVentas>();
+        
+        detalles = cliente.buscarVenta(id);
+        
+        model.setRowCount(0);
+        for(VwDetalleVentas dt : detalles){
+            model.addRow(new Object[]{dt.getIdDetalle(),dt.getIdProducto(),dt.getProduco(),dt.getIdVenta(),dt.getPrecio(),dt.getDescuento()});
+        }
+        jTable2.setModel(model);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -148,7 +180,7 @@ public class FormAdminVentas extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSelectVenta2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectVenta2ActionPerformed
-        FormBuscarVenta bv = new FormBuscarVenta();
+        FormBuscarVenta bv = new FormBuscarVenta(this);
         
         bv.setVisible(true);
     }//GEN-LAST:event_btnSelectVenta2ActionPerformed
@@ -168,4 +200,5 @@ public class FormAdminVentas extends javax.swing.JPanel {
     private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtProducto;
     // End of variables declaration//GEN-END:variables
+
 }
