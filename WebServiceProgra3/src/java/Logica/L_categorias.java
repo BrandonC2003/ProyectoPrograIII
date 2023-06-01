@@ -34,7 +34,7 @@ public class L_categorias {
            
             return true;
         } catch (Exception e) {
-            System.out.println("este es el mensaje: "+e.getMessage());
+            System.out.println("Error: "+e.getMessage());
             return false;
         }
     }

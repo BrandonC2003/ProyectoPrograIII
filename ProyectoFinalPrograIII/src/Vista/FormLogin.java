@@ -16,14 +16,13 @@ public class FormLogin extends javax.swing.JFrame {
 
     private static final long serialVersionUID = 1L;
 
-    /**
-     * Creates new form Login
-     */
+    
     public FormLogin() {
         initComponents();
         this.setLocationRelativeTo(null);
     }
-
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -205,6 +204,7 @@ public class FormLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnIniciarMouseEntered
 
     private void btnIniciarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIniciarMouseClicked
+        
         String Usuario = "admin";
         String Contraseña = "123";
 
