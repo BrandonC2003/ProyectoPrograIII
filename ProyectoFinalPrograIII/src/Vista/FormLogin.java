@@ -6,9 +6,12 @@
 package Vista;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import webservicebar.Login;
+import webservicebar.Usuarios;
 import webservicebar.WebServiceBar_Service;
 import webservicebar.WebServiceBar;
 
@@ -20,6 +23,7 @@ public class FormLogin extends javax.swing.JFrame {
 
     private static final long serialVersionUID = 1L;
     public static String nombreUsuario = null;
+    public static String nivel = null;
     
     WebServiceBar_Service servicio;
     WebServiceBar cliente;
@@ -72,11 +76,9 @@ public class FormLogin extends javax.swing.JFrame {
         jLabel2.setText("Contraseña:");
 
         txtUsuario.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        txtUsuario.setForeground(new java.awt.Color(153, 153, 153));
         txtUsuario.setBorder(null);
 
         txtContra.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        txtContra.setForeground(new java.awt.Color(153, 153, 153));
         txtContra.setBorder(null);
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 36)); // NOI18N
@@ -217,11 +219,14 @@ public class FormLogin extends javax.swing.JFrame {
     private void btnIniciarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIniciarMouseClicked
         String pass = new String(txtContra.getPassword());
         String usuario = txtUsuario.getText();
+        List<Usuarios> user = new ArrayList<Usuarios>();
         /*cliente.login(usuario, pass*/
-        if(true){
-            FormInicio inicio = new FormInicio();
-            this.nombreUsuario = usuario;
+        if(cliente.login(usuario, pass)){
             
+            this.nombreUsuario = usuario;
+            user = cliente.buscarUsuarios(usuario);
+            nivel = user.get(0).getNivel();
+            FormInicio inicio = new FormInicio();
             inicio.setVisible(true);
             dispose();
         }

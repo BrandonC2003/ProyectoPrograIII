@@ -20,6 +20,21 @@ public class FormInicio extends javax.swing.JFrame {
     public FormInicio() {
         initComponents();
         this.setLocationRelativeTo(null);
+        switch(FormLogin.nivel){
+            case "Administrador":
+                break;
+            case "Vendedor":
+                jmProductos.setVisible(false);
+                opUsuarios.setVisible(false);
+                opCategoria.setVisible(false);
+                opModificarVenta.setVisible(false);
+                break;
+            case "Inventariador":;
+                opUsuarios.setVisible(false);
+                opCategoria.setVisible(false);
+                jmVentas.setVisible(false);
+                break;
+        }
     }
 
     /**
