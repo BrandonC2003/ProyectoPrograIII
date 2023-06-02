@@ -5,9 +5,11 @@
  */
 package Vista;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import webservicebar.Usuarios;
 import webservicebar.WebServiceBar_Service;
 import webservicebar.WebServiceBar;
+
 
 /**
  *
@@ -20,13 +22,23 @@ public class FormUsuarios extends javax.swing.JPanel {
      */
     WebServiceBar_Service servicio;
     WebServiceBar cliente;
+    DefaultTableModel model;
     public FormUsuarios() {
         initComponents();
         rbtVendedor.setSelected(true);
         servicio = new WebServiceBar_Service();
         cliente = servicio.getWebServiceBarPort();
+        model = new DefaultTableModel();
     }
-
+    private void limpiar(){
+        txfUsuario.setText("");
+        txfNombre.setText("");
+        txfApellido.setText("");
+        passClave.setText("");
+        txfTelefono.setText("");
+        chbActivo.isSelected();
+        rbtAdministrador.setSelected(true);
+    }
     private String obtenerNivel(){
         if(rbtAdministrador.isSelected()){
             return "Administrador";
@@ -225,6 +237,7 @@ public class FormUsuarios extends javax.swing.JPanel {
         
         if(resultado){
             JOptionPane.showMessageDialog(this, "Usuario insertado exitosamente");
+            limpiar();
         }else{
             JOptionPane.showMessageDialog(this, "Ocurrio un error al intentar insertar el usuario");
         }
