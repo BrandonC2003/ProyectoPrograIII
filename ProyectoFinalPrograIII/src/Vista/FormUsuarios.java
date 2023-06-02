@@ -4,9 +4,12 @@
  * and open the template in the editor.
  */
 package Vista;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import webservicebar.Usuarios;
+import webservicebar.Ventas;
 import webservicebar.WebServiceBar_Service;
 import webservicebar.WebServiceBar;
 
@@ -29,6 +32,15 @@ public class FormUsuarios extends javax.swing.JPanel {
         servicio = new WebServiceBar_Service();
         cliente = servicio.getWebServiceBarPort();
         model = new DefaultTableModel();
+        model.addColumn("Usuario");
+        model.addColumn("Nombre");
+        model.addColumn("Apellido");
+        model.addColumn("Clave");
+        model.addColumn("Telefono");
+        model.addColumn("Estado");
+        model.addColumn("Nivel");
+        
+        llenarTabla();
     }
     private void limpiar(){
         txfUsuario.setText("");
@@ -48,6 +60,27 @@ public class FormUsuarios extends javax.swing.JPanel {
         }else{
             return "Inventariador";
         } 
+    }
+    
+    private void llenarTabla(){
+        List<Usuarios> usuario = new ArrayList<Usuarios>();
+        usuario = cliente.listarUsuarios();
+        model.setRowCount(0);
+        for(Usuarios user : usuario){
+            model.addRow(new Object[]{user.getNombreUsuario(), user.getNombre(),user.getApellido(), user.getClave(), user.getTelefono(),user.getEstado(), user.getNivel()});
+        }
+        tblInformacion.setModel(model);
+    }
+    private void ponerNivel(String nivel){
+        if(nivel.equals("Administrador")){
+            rbtAdministrador.setSelected(true);
+        }
+        if(nivel.equals("Vendedor")){
+            rbtVendedor.setSelected(true);
+        }
+        if(nivel.equals("Inventariador")){
+            rbtInventariador.setSelected(true);
+        }
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -126,6 +159,11 @@ public class FormUsuarios extends javax.swing.JPanel {
 
         btnEditar.setBackground(new java.awt.Color(102, 255, 255));
         btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         tblInformacion.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -138,6 +176,11 @@ public class FormUsuarios extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblInformacion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblInformacionMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblInformacion);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -228,7 +271,7 @@ public class FormUsuarios extends javax.swing.JPanel {
         usuario.setNombreUsuario(txfUsuario.getText());
         usuario.setNombre(txfNombre.getText());
         usuario.setApellido(txfApellido.getText());
-        usuario.setClave(passClave.getPassword().toString());
+        usuario.setClave(new String(passClave.getPassword()));
         usuario.setTelefono(txfTelefono.getText());
         usuario.setEstado(chbActivo.isSelected() ? 1 : 0);
         usuario.setNivel(obtenerNivel());
@@ -238,10 +281,54 @@ public class FormUsuarios extends javax.swing.JPanel {
         if(resultado){
             JOptionPane.showMessageDialog(this, "Usuario insertado exitosamente");
             limpiar();
+            llenarTabla();
         }else{
-            JOptionPane.showMessageDialog(this, "Ocurrio un error al intentar insertar el usuario");
+            JOptionPane.showMessageDialog(this, "Ocurrio un error al intentar insertar el usuario, el nombre de usuario no puede repetirse.");
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void tblInformacionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblInformacionMouseClicked
+        int fila = tblInformacion.getSelectedRow();
+        Usuarios user = new Usuarios();
+        user.setNombreUsuario(tblInformacion.getValueAt(fila, 0).toString());
+        user.setNombre(tblInformacion.getValueAt(fila, 1).toString());
+        user.setApellido(tblInformacion.getValueAt(fila, 2).toString());
+        user.setClave(tblInformacion.getValueAt(fila, 3).toString());
+        user.setTelefono(tblInformacion.getValueAt(fila, 4).toString());
+        user.setEstado(Integer.parseInt(tblInformacion.getValueAt(fila, 5).toString()));
+        user.setNivel(tblInformacion.getValueAt(fila, 6).toString());
+        
+        txfUsuario.setText(user.getNombreUsuario());
+        txfNombre.setText(user.getNombre());
+        txfApellido.setText(user.getApellido());
+        passClave.setText(user.getClave());
+        txfTelefono.setText(user.getTelefono());
+        chbActivo.setSelected(user.getEstado() == 1 ? true : false);
+        ponerNivel(user.getNivel());
+        
+    }//GEN-LAST:event_tblInformacionMouseClicked
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        Usuarios usuario = new Usuarios();
+        
+        usuario.setNombreUsuario(txfUsuario.getText());
+        usuario.setNombre(txfNombre.getText());
+        usuario.setApellido(txfApellido.getText());
+        usuario.setClave(new String(passClave.getPassword()));
+        usuario.setTelefono(txfTelefono.getText());
+        usuario.setEstado(chbActivo.isSelected() ? 1 : 0);
+        usuario.setNivel(obtenerNivel());
+        
+        boolean resp = cliente.modificarUsuario(usuario.getNombreUsuario(), usuario.getNombre(), usuario.getApellido(), usuario.getClave(),usuario.getTelefono() , usuario.getEstado(), usuario.getNivel());
+        
+        if(resp){
+            JOptionPane.showMessageDialog(this, "Usuario actualizado exitosamente");
+            limpiar();
+            llenarTabla();
+        }else{
+            JOptionPane.showMessageDialog(this, "Error al actualizar el usuario, el nombre de usuario no puede ser repetido.");
+        }
+    }//GEN-LAST:event_btnEditarActionPerformed
 
 
     

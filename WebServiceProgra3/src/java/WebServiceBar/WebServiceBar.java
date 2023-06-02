@@ -164,7 +164,7 @@ public class WebServiceBar {
      */
     @WebMethod(operationName = "login")
     public boolean login(@WebParam(name = "usuario") String usuario, @WebParam(name = "clave") String clave) {
-        return objLogin.login(usuario, clave);
+        return objLogin.login(usuario, Conexion.SHA_256(clave));
     }
 
     /**
@@ -227,7 +227,7 @@ public class WebServiceBar {
         usuario.setNombre(nombre);
         usuario.setApellido(apellido);
         usuario.setTelefono(telefono);
-        usuario.setClave(clave);
+        usuario.setClave(Conexion.SHA_256(clave));
         usuario.setEstado(estado);
         usuario.setNivel(nivel);
         
@@ -242,7 +242,7 @@ public class WebServiceBar {
         usuario.setNombre(nombre);
         usuario.setApellido(apellido);
         usuario.setTelefono(telefono);
-        usuario.setClave(clave);
+        usuario.setClave(Conexion.SHA_256(clave));
         usuario.setEstado(estado);
         usuario.setNivel(nivel);
         

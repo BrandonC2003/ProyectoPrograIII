@@ -4,6 +4,14 @@
  * and open the template in the editor.
  */
 package Vista;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import models.ITransferDtVentas;
+import webservicebar.Categorias;
+import webservicebar.WebServiceBar;
+import webservicebar.WebServiceBar_Service;
 
 /**
  *
@@ -14,8 +22,23 @@ public class FormCategorias extends javax.swing.JPanel {
     /**
      * Creates new form FormCategorias
      */
+    
+    DefaultTableModel model;
+    WebServiceBar_Service servicio;
+    WebServiceBar cliente;
+    ITransferDtVentas envD;
+    int idCategoria;
     public FormCategorias() {
         initComponents();
+        servicio = new WebServiceBar_Service();
+        cliente = servicio.getWebServiceBarPort();
+        this.envD = envD;
+        model = new DefaultTableModel();
+        model.addColumn("idCategoria");
+        model.addColumn("categoria");
+        model.addColumn("descripcion");
+        tblDescripcion.setModel(model);
+        llenarTabla();
     }
 
     /**
@@ -27,10 +50,10 @@ public class FormCategorias extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        txfCategoria = new javax.swing.JTextField();
+        txtCategoria = new javax.swing.JTextField();
         lblCategoria = new javax.swing.JLabel();
         txaDescripcion = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txtdescripcion = new javax.swing.JTextArea();
         btnGuardar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -42,13 +65,23 @@ public class FormCategorias extends javax.swing.JPanel {
         lblCategoria.setForeground(new java.awt.Color(255, 255, 255));
         lblCategoria.setText("Categoria");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        txaDescripcion.setViewportView(jTextArea1);
+        txtdescripcion.setColumns(20);
+        txtdescripcion.setRows(5);
+        txaDescripcion.setViewportView(txtdescripcion);
 
         btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
 
         tblDescripcion.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -61,6 +94,11 @@ public class FormCategorias extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblDescripcion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblDescripcionMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblDescripcion);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -78,7 +116,7 @@ public class FormCategorias extends javax.swing.JPanel {
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txaDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txfCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addComponent(txtCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(70, 70, 70)
                         .addComponent(btnGuardar)
@@ -92,7 +130,7 @@ public class FormCategorias extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txfCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblCategoria))
                 .addGap(28, 28, 28)
                 .addComponent(txaDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -106,15 +144,77 @@ public class FormCategorias extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    private void llenarTabla(){
+        List<Categorias> cat = new ArrayList<Categorias>();
+        cat = cliente.listarCategoria();
+        model.setRowCount(0);
+        for(Categorias cate : cat){
+            model.addRow(new Object[]{cate.getIdCategoria(), cate.getCategoria(), cate.getDescripcion()});
+        }
+        tblDescripcion.setModel(model);
+    }
+    
+    private void limpiar(){
+        txtCategoria.setText("");
+        txtdescripcion.setText("");       
+        
+    }
+      
+    
+    
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        // TODO add your handling code here:
+        Categorias catego = new Categorias();       
+        
+        catego.setCategoria(txtCategoria.getText());
+        catego.setDescripcion(txtdescripcion.getText());
+        
+        if (cliente.insertarCategoria(catego)) {
+            JOptionPane.showMessageDialog(this, "Categoria insertada exitosamente.");
+            limpiar();
+            llenarTabla();
+        }else{
+            JOptionPane.showMessageDialog(this, "Hubo un error al insertar la categoria, la categoria que intentas ingresar ya existe.");
+        }
+        limpiar();
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        // TODO add your handling code here:
+        Categorias categom = new Categorias();       
+        
+        categom.setIdCategoria(idCategoria);
+        categom.setCategoria(txtCategoria.getText());
+        categom.setDescripcion(txtdescripcion.getText());
+        
+        if(cliente.modificarCategoria(categom.getIdCategoria(), categom.getCategoria(), categom.getDescripcion())){
+            JOptionPane.showMessageDialog(this, "Categoria modificada exitosamente.");
+            limpiar();
+            llenarTabla();
+        }else{
+            JOptionPane.showMessageDialog(this, "Ocurrio un error, la categoria no pudo ser modificada.");
+        }
+        limpiar();
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void tblDescripcionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDescripcionMouseClicked
+        int fila = tblDescripcion.getSelectedRow();
+        int id = Integer.parseInt(tblDescripcion.getValueAt(fila, 0).toString());
+        idCategoria = id;
+        txtCategoria.setText(tblDescripcion.getValueAt(fila, 1).toString());
+        txtdescripcion.setText(tblDescripcion.getValueAt(fila, 2).toString());
+    }//GEN-LAST:event_tblDescripcionMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel lblCategoria;
     private javax.swing.JTable tblDescripcion;
     private javax.swing.JScrollPane txaDescripcion;
-    private javax.swing.JTextField txfCategoria;
+    private javax.swing.JTextField txtCategoria;
+    private javax.swing.JTextArea txtdescripcion;
     // End of variables declaration//GEN-END:variables
 }

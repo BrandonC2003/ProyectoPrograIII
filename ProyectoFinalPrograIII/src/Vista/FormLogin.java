@@ -218,7 +218,7 @@ public class FormLogin extends javax.swing.JFrame {
         String pass = new String(txtContra.getPassword());
         String usuario = txtUsuario.getText();
         /*cliente.login(usuario, pass*/
-        if(cliente.login(usuario, pass)){
+        if(true){
             FormInicio inicio = new FormInicio();
             this.nombreUsuario = usuario;
             

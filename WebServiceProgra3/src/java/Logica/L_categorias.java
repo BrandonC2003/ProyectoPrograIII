@@ -47,7 +47,7 @@ public class L_categorias {
           
         try (Connection conexion = Conexion.obtenerConexion();){ 
   
-            String sqlCategoria = "UPDATE categorias set Categria = ? , Descripcion = ? where IdCategoria = ?"; 
+            String sqlCategoria = "UPDATE categorias set Categoria = ? , Descripcion = ? where IdCategoria = ?"; 
              
             CallableStatement categoria = conexion.prepareCall(sqlCategoria); 
              
