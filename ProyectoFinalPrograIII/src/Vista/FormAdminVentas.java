@@ -45,6 +45,7 @@ public class FormAdminVentas extends javax.swing.JPanel implements ITransferDtVe
         model.addColumn("Precio");
         model.addColumn("Descuento");
         jTable2.setModel(model);
+        limpiar();
     }
 
     @Override

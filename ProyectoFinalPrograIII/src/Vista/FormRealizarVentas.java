@@ -5,17 +5,66 @@
  */
 package Vista;
 
+import javax.swing.table.DefaultTableModel;
+import webservicebar.WebServiceBar;
+import webservicebar.WebServiceBar_Service;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import models.ITransferProductos;
+import webservicebar.DetalleVenta;
+import webservicebar.VwDetalleVentas;
+
 /**
  *
  * @author brand
  */
-public class FormRealizarVentas extends javax.swing.JPanel {
+public class FormRealizarVentas extends javax.swing.JPanel implements ITransferProductos {
 
     /**
      * Creates new form FormRealizarVentas
      */
+    DefaultTableModel model;
+    WebServiceBar_Service servicio;
+    WebServiceBar cliente;
+
     public FormRealizarVentas() {
         initComponents();
+        servicio = new WebServiceBar_Service();
+        cliente = servicio.getWebServiceBarPort();
+
+        model = new DefaultTableModel();
+        model.addColumn("idDetalle");
+        model.addColumn("idProducto");
+        model.addColumn("Producto");
+        model.addColumn("Cantidad");
+        model.addColumn("idVenta");
+        model.addColumn("Precio");
+        model.addColumn("Descuento");
+        jTable1.setModel(model);
+        llenarTabla();
+    }
+
+    @Override
+    public void seleccionarId(int id) {
+        spnIdProducto.setValue(id);
+    }
+
+    private void llenarTabla() {
+        List<VwDetalleVentas> detalles = new ArrayList<VwDetalleVentas>();
+
+        detalles = cliente.obtenerDetalleVenta(FormLogin.nombreUsuario);
+
+        model.setRowCount(0);
+        for (VwDetalleVentas dt : detalles) {
+            model.addRow(new Object[]{dt.getIdDetalle(), dt.getIdProducto(), dt.getProduco(), dt.getCantidad(), dt.getIdVenta(), dt.getPrecio(), dt.getDescuento()});
+        }
+        jTable1.setModel(model);
+    }
+
+    private void limpiar() {
+        spnIdProducto.setValue(0);
+        spnCantidad.setValue(0);
     }
 
     /**
@@ -30,12 +79,12 @@ public class FormRealizarVentas extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        txtIdProducto = new javax.swing.JTextField();
         spnCantidad = new javax.swing.JSpinner();
         jLabel2 = new javax.swing.JLabel();
         btnInsertar = new javax.swing.JButton();
         btnFinalizar = new javax.swing.JButton();
         btnBuscar = new javax.swing.JButton();
+        spnIdProducto = new javax.swing.JSpinner();
 
         setBackground(new java.awt.Color(0, 0, 0));
 
@@ -52,68 +101,132 @@ public class FormRealizarVentas extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(jTable1);
 
+        jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("ID Producto: ");
 
+        spnCantidad.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        spnCantidad.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+
+        jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Cantidad:");
 
+        btnInsertar.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         btnInsertar.setText("Insertar");
+        btnInsertar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInsertarActionPerformed(evt);
+            }
+        });
 
+        btnFinalizar.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         btnFinalizar.setText("Finalizar");
+        btnFinalizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFinalizarActionPerformed(evt);
+            }
+        });
 
+        btnBuscar.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+
+        spnIdProducto.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        spnIdProducto.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(63, 63, 63)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(58, 58, 58)
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtIdProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnBuscar))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(78, 78, 78)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(18, 18, 18)
+                                .addComponent(spnIdProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(32, 32, 32)
+                                .addComponent(btnBuscar))
+                            .addComponent(btnInsertar, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(209, 209, 209)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnInsertar, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(80, 80, 80)
-                                .addComponent(btnFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addGap(18, 18, 18)
-                                .addComponent(spnCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(37, 37, 37)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(47, Short.MAX_VALUE))
+                                .addComponent(spnCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE))
+                            .addComponent(btnFinalizar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane1))
+                .addGap(59, 59, 59))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txtIdProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscar))
-                .addGap(33, 33, 33)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(88, 88, 88)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(spnCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addGap(40, 40, 40)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel1)
+                    .addComponent(btnBuscar)
+                    .addComponent(spnIdProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnInsertar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(55, Short.MAX_VALUE))
+                .addGap(32, 32, 32)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                .addGap(62, 62, 62))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarActionPerformed
+        DetalleVenta detalleV = new DetalleVenta();
+
+        detalleV.setIdProducto(Integer.parseInt(spnIdProducto.getValue().toString()));
+        detalleV.setCantidad(Integer.parseInt(spnCantidad.getValue().toString()));
+        detalleV.setUsuarioInserta(FormLogin.nombreUsuario);
+
+        if (Integer.parseInt(spnIdProducto.getValue().toString()) == 0 || Integer.parseInt(spnCantidad.getValue().toString()) == 0) {
+            JOptionPane.showMessageDialog(this, "Tienes que insertar el id del producto y la cantidad que deseas vender.");
+        } else {
+            if (cliente.insetarDetalleVenta(detalleV)) {
+                llenarTabla();
+                limpiar();
+            } else {
+                JOptionPane.showMessageDialog(this, "La cantidad que intentas vender es superior a la que hay en el inventario");
+            }
+        }
+    }//GEN-LAST:event_btnInsertarActionPerformed
+
+    private void btnFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarActionPerformed
+        boolean condicion = model.getRowCount() > 0 ? true : false;
+        int confirm = JOptionPane.showConfirmDialog(this, "¿Estás seguro de confirmar la venta?", "Confirmación", JOptionPane.YES_NO_OPTION);
+        if (confirm == JOptionPane.YES_OPTION) {
+            if (condicion) {
+                if (cliente.confirmarVenta(FormLogin.nombreUsuario)) {
+                    llenarTabla();
+                    limpiar();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Ocurrio un error al confirmar la venta.");
+                }
+            }else{
+                JOptionPane.showMessageDialog(this, "Tienes que insertar una venta antes de confirmarla.");
+            }
+        }
+    }//GEN-LAST:event_btnFinalizarActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        BuscarID buscarIdProd = new BuscarID(this);
+
+        buscarIdProd.setVisible(true);
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -125,6 +238,7 @@ public class FormRealizarVentas extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JSpinner spnCantidad;
-    private javax.swing.JTextField txtIdProducto;
+    private javax.swing.JSpinner spnIdProducto;
     // End of variables declaration//GEN-END:variables
+
 }
