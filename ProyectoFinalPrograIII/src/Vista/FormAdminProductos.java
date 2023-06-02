@@ -6,6 +6,13 @@
 
 package Vista;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import webservicebar.Productos;
+import webservicebar.WebServiceBar_Service;
+import webservicebar.WebServiceBar;
 /**
  *
  * @author brand
@@ -13,10 +20,47 @@ package Vista;
 public class FormAdminProductos extends javax.swing.JPanel {
 
     /** Creates new form FormAdminProductos */
+    WebServiceBar_Service servicio;
+    WebServiceBar cliente;
+    Productos produ;
+    DefaultTableModel model;
     public FormAdminProductos() {
         initComponents();
+        
+        servicio = new WebServiceBar_Service();
+        cliente = servicio.getWebServiceBarPort();
+        model = new DefaultTableModel();
+        model.addColumn("idProducto");
+        model.addColumn("idCategoria");
+        model.addColumn("Nombre_Producto");
+        model.addColumn("Cantidad");
+        model.addColumn("Precio_Unitario");
+        model.addColumn("Descuento");
+        model.addColumn("Usuario_Inserta");
+        jTable1.setModel(model);
+        limpiar();
+        llenarTabla();
     }
 
+        private void limpiar(){
+        txtProducto.setText("");
+        spnStock.setValue(0);
+        spnPrecio.setValue(0);
+        spnDescuento.setValue(0);
+    }
+    private void llenarTabla() {
+        List<Productos> producto = new ArrayList<Productos>();
+
+        producto = cliente.listarProductos();
+
+        model.setRowCount(0);
+        for (Productos dt : producto) {
+            model.addRow(new Object[]{dt.getIdProducto(),dt.getIdCategoria(),dt.getNombreProducto(),dt.getCantidad(),dt.getPrecioUnitario(),dt.getDescuento(),dt.getUsuarioInserta()});
+        }
+        jTable1.setModel(model);
+    }
+
+    
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -66,6 +110,11 @@ public class FormAdminProductos extends javax.swing.JPanel {
         jLabel5.setText("Descuento:");
 
         cboCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboCategoriaActionPerformed(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
@@ -91,6 +140,11 @@ public class FormAdminProductos extends javax.swing.JPanel {
         btnGuardar.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         btnGuardar.setMaximumSize(new java.awt.Dimension(200, 137));
         btnGuardar.setPreferredSize(new java.awt.Dimension(203, 137));
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         btnEditar.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/modificar.png"))); // NOI18N
@@ -166,6 +220,33 @@ public class FormAdminProductos extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        // TODO add your handling code here:
+        Productos producto = new Productos ();
+        
+        producto.setNombreProducto(txtProducto.getText());
+        producto.setIdCategoria(Integer.parseInt((String) cboCategoria.getSelectedItem()));
+        producto.setCantidad(Integer.parseInt(spnStock.getValue().toString()));
+        producto.setPrecioUnitario(Double.parseDouble(spnPrecio.getValue().toString()));
+        producto.setDescuento(Double.parseDouble(spnDescuento.getValue().toString()));
+        
+        boolean resultado = cliente.agregarProductos(producto.getNombreProducto(),producto.getCantidad(),producto.getPrecioUnitario(),producto.getDescuento());
+        
+        if(resultado){
+            JOptionPane.showMessageDialog(this, "Usuario insertado exitosamente");
+            limpiar();
+        }else{
+            JOptionPane.showMessageDialog(this, "Ocurrio un error al intentar insertar el usuario");
+        }
+        
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void cboCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboCategoriaActionPerformed
+        // TODO add your handling code here:
+        
+        
+    }//GEN-LAST:event_cboCategoriaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEditar;
@@ -184,5 +265,9 @@ public class FormAdminProductos extends javax.swing.JPanel {
     private javax.swing.JSpinner spnStock;
     private javax.swing.JTextField txtProducto;
     // End of variables declaration//GEN-END:variables
+
+    private void llenarTabla(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
 }
