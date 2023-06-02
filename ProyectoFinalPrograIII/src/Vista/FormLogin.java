@@ -221,6 +221,7 @@ public class FormLogin extends javax.swing.JFrame {
         if(cliente.login(usuario, pass)){
             FormInicio inicio = new FormInicio();
             this.nombreUsuario = usuario;
+            
             inicio.setVisible(true);
             dispose();
         }
