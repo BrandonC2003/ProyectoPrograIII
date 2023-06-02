@@ -217,6 +217,7 @@ public class FormLogin extends javax.swing.JFrame {
     private void btnIniciarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIniciarMouseClicked
         String pass = new String(txtContra.getPassword());
         String usuario = txtUsuario.getText();
+        /*cliente.login(usuario, pass*/
         if(cliente.login(usuario, pass)){
             FormInicio inicio = new FormInicio();
             this.nombreUsuario = usuario;
