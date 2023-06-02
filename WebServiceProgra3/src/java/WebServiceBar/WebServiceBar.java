@@ -164,7 +164,7 @@ public class WebServiceBar {
      */
     @WebMethod(operationName = "login")
     public boolean login(@WebParam(name = "usuario") String usuario, @WebParam(name = "clave") String clave) {
-        return objLogin.login(usuario, clave);
+        return objLogin.login(usuario, L_Login.SHA_256(clave));
     }
 
     /**

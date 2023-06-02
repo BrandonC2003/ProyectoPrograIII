@@ -7,8 +7,10 @@ package Vista;
 
 import java.awt.Color;
 import javax.swing.JOptionPane;
-import webservicebar.WebServiceBar;
+import javax.swing.table.DefaultTableModel;
+import webservicebar.Login;
 import webservicebar.WebServiceBar_Service;
+import webservicebar.WebServiceBar;
 
 /**
  *
@@ -18,10 +20,16 @@ public class FormLogin extends javax.swing.JFrame {
 
     private static final long serialVersionUID = 1L;
     public static String nombreUsuario = null;
-
+    
+    WebServiceBar_Service servicio;
+    WebServiceBar cliente;
     
     public FormLogin() {
         initComponents();
+        servicio = new WebServiceBar_Service();
+        cliente = servicio.getWebServiceBarPort();
+        
+        
         this.setLocationRelativeTo(null);
     }
     
@@ -207,15 +215,13 @@ public class FormLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnIniciarMouseEntered
 
     private void btnIniciarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIniciarMouseClicked
-        
-        String Usuario = "admin";
-        String Contraseña = "123";
-
         String pass = new String(txtContra.getPassword());
-
-        if(txtUsuario.getText().equals(Usuario)&& pass.equals(Contraseña)){
+        String usuario = txtUsuario.getText();
+        /*cliente.login(usuario, pass*/
+        if(cliente.login(usuario, pass)){
             FormInicio inicio = new FormInicio();
-            this.nombreUsuario = Usuario;
+            this.nombreUsuario = usuario;
+            
             inicio.setVisible(true);
             dispose();
         }
