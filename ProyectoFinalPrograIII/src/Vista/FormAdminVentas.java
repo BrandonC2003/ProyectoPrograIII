@@ -5,6 +5,7 @@
  */
 package Vista;
 
+import static java.awt.image.ImageObserver.HEIGHT;
 import javax.swing.table.DefaultTableModel;
 import models.ITransferDtVentas;
 import webservicebar.WebServiceBar_Service;
@@ -12,6 +13,8 @@ import webservicebar.WebServiceBar;
 import webservicebar.VwDetalleVentas;
 import java.util.List;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import webservicebar.DetalleVenta;
 /**
  *
  * @author brand
@@ -24,14 +27,18 @@ public class FormAdminVentas extends javax.swing.JPanel implements ITransferDtVe
     DefaultTableModel model;
     WebServiceBar_Service servicio;
     WebServiceBar cliente;
+    DetalleVenta detalles;
     public FormAdminVentas() {
         initComponents();
         servicio = new WebServiceBar_Service();
         cliente = servicio.getWebServiceBarPort();
+        detalles = new DetalleVenta();
+        detalles.setIdDetalle(0);
         model = new DefaultTableModel();
         model.addColumn("idDetalle");
         model.addColumn("idProducto");
         model.addColumn("Producto");
+        model.addColumn("Cantidad");
         model.addColumn("idVenta");
         model.addColumn("Precio");
         model.addColumn("Descuento");
@@ -40,13 +47,23 @@ public class FormAdminVentas extends javax.swing.JPanel implements ITransferDtVe
 
     @Override
     public void transferirDatos(int id) {
+        llenarTabla(id);
+        detalles.setIdVenta(id);
+    }
+    private void limpiar(){
+        txtProducto.setText("");
+        spnCantidad.setValue(0);
+        detalles.setIdDetalle(0);
+    }
+    
+    private void llenarTabla(int id){
         List<VwDetalleVentas> detalles = new ArrayList<VwDetalleVentas>();
         
         detalles = cliente.buscarVenta(id);
         
         model.setRowCount(0);
         for(VwDetalleVentas dt : detalles){
-            model.addRow(new Object[]{dt.getIdDetalle(),dt.getIdProducto(),dt.getProduco(),dt.getIdVenta(),dt.getPrecio(),dt.getDescuento()});
+            model.addRow(new Object[]{dt.getIdDetalle(),dt.getIdProducto(),dt.getProduco(),dt.getCantidad(),dt.getIdVenta(),dt.getPrecio(),dt.getDescuento()});
         }
         jTable2.setModel(model);
     }
@@ -66,9 +83,6 @@ public class FormAdminVentas extends javax.swing.JPanel implements ITransferDtVe
         btnEliminar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
-        jLabel8 = new javax.swing.JLabel();
-        txtBuscar = new javax.swing.JTextField();
-        btnBuscar1 = new javax.swing.JButton();
         txtProducto = new javax.swing.JTextField();
         spnCantidad = new javax.swing.JSpinner();
 
@@ -92,6 +106,11 @@ public class FormAdminVentas extends javax.swing.JPanel implements ITransferDtVe
 
         btnModifcar.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         btnModifcar.setText("Modificar");
+        btnModifcar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModifcarActionPerformed(evt);
+            }
+        });
 
         btnEliminar.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         btnEliminar.setText("Eliminar");
@@ -107,14 +126,12 @@ public class FormAdminVentas extends javax.swing.JPanel implements ITransferDtVe
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable2MouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTable2);
-
-        jLabel8.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("Buscar");
-
-        btnBuscar1.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        btnBuscar1.setText("Buscar");
 
         txtProducto.setEditable(false);
 
@@ -138,27 +155,15 @@ public class FormAdminVentas extends javax.swing.JPanel implements ITransferDtVe
                         .addComponent(jLabel6)
                         .addGap(18, 18, 18)
                         .addComponent(txtProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(56, 56, 56)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtBuscar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnBuscar1)
-                        .addGap(28, 28, 28))
-                    .addComponent(jScrollPane2))
-                .addGap(66, 66, 66))
+                .addGap(58, 58, 58)
+                .addComponent(jScrollPane2)
+                .addGap(64, 64, 64))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(22, 22, 22)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnBuscar1)
-                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8)
-                    .addComponent(btnSelectVenta2))
+                .addComponent(btnSelectVenta2)
                 .addGap(47, 47, 47)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2)
@@ -185,19 +190,43 @@ public class FormAdminVentas extends javax.swing.JPanel implements ITransferDtVe
         bv.setVisible(true);
     }//GEN-LAST:event_btnSelectVenta2ActionPerformed
 
+    private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
+        int fila = jTable2.getSelectedRow();
+        detalles.setIdDetalle(Integer.parseInt(jTable2.getValueAt(fila, 0).toString()));
+        detalles.setIdProducto(Integer.parseInt(jTable2.getValueAt(fila, 1).toString()));
+        String nombreProducto = jTable2.getValueAt(fila,2).toString();
+        int cantidadProd = Integer.parseInt(jTable2.getValueAt(fila, 3).toString());
+        
+        txtProducto.setText(nombreProducto);
+        spnCantidad.setValue(cantidadProd);
+    }//GEN-LAST:event_jTable2MouseClicked
 
+    private void btnModifcarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifcarActionPerformed
+        if(detalles.getIdDetalle() == 0){
+            JOptionPane.showMessageDialog(this,"Tienes que seleccionar un detalle de venta para poder editarlo");
+        }else{
+            detalles.setCantidad(Integer.parseInt(spnCantidad.getValue().toString()));
+        
+            if (cliente.modificarDetalleVenta(detalles)){
+                JOptionPane.showMessageDialog(this,"El detalle de venta fue actualizado correctamente.");
+                limpiar();
+                llenarTabla(detalles.getIdVenta());
+            }else{
+                JOptionPane.showMessageDialog(this,"Ocurrio un error, la cantidad de productos no es suficiente para poder realizar esta venta.");
+            }
+        }
+    }//GEN-LAST:event_btnModifcarActionPerformed
+
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBuscar1;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnModifcar;
     private javax.swing.JButton btnSelectVenta2;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable2;
     private javax.swing.JSpinner spnCantidad;
-    private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtProducto;
     // End of variables declaration//GEN-END:variables
 
