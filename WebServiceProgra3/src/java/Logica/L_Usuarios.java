@@ -48,7 +48,7 @@ public class L_Usuarios {
         int confirmacion = 0;
         try (Connection conexion = Conexion.obtenerConexion();) {
             //Preparar la llamada al procedimiento almacenado
-            String procedimiento = "{call sp_agregarusuario(?, ?, ?, ?, ?, ?, ?)}";
+            String procedimiento = "{call sp_modificarUsuario(?, ?, ?, ?, ?, ?, ?, ?)}";
             CallableStatement llamada = conexion.prepareCall(procedimiento);
     
             llamada.setString(1,objUsuario.getNombreUsuario());
@@ -58,11 +58,9 @@ public class L_Usuarios {
             llamada.setString(5,objUsuario.getTelefono());
             llamada.setInt(6,objUsuario.getEstado());
             llamada.setString(7,objUsuario.getNivel());
-            llamada.registerOutParameter(5, java.sql.Types.INTEGER);
+            llamada.setString(8,objUsuario.getUsuarioActualiza());
             
             llamada.execute();
-            
-            confirmacion = llamada.getInt(5);
             
             llamada.close();
             

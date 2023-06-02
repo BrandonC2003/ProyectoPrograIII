@@ -6,6 +6,7 @@
 package Vista;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import models.ITransferDtVentas;
 import webservicebar.Categorias;
@@ -26,7 +27,7 @@ public class FormCategorias extends javax.swing.JPanel {
     WebServiceBar_Service servicio;
     WebServiceBar cliente;
     ITransferDtVentas envD;
-    
+    int idCategoria;
     public FormCategorias() {
         initComponents();
         servicio = new WebServiceBar_Service();
@@ -93,6 +94,11 @@ public class FormCategorias extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblDescripcion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblDescripcionMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblDescripcion);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -141,10 +147,10 @@ public class FormCategorias extends javax.swing.JPanel {
     
     private void llenarTabla(){
         List<Categorias> cat = new ArrayList<Categorias>();
-        cat = cliente.listarCategorias();
+        cat = cliente.listarCategoria();
         model.setRowCount(0);
         for(Categorias cate : cat){
-            model.addRow(new Object[]{cate.getCategoria(), cate.getCategoria()});
+            model.addRow(new Object[]{cate.getIdCategoria(), cate.getCategoria(), cate.getDescripcion()});
         }
         tblDescripcion.setModel(model);
     }
@@ -163,15 +169,42 @@ public class FormCategorias extends javax.swing.JPanel {
         
         catego.setCategoria(txtCategoria.getText());
         catego.setDescripcion(txtdescripcion.getText());
+        
+        if (cliente.insertarCategoria(catego)) {
+            JOptionPane.showMessageDialog(this, "Categoria insertada exitosamente.");
+            limpiar();
+            llenarTabla();
+        }else{
+            JOptionPane.showMessageDialog(this, "Hubo un error al insertar la categoria, la categoria que intentas ingresar ya existe.");
+        }
+        limpiar();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
         Categorias categom = new Categorias();       
         
+        categom.setIdCategoria(idCategoria);
         categom.setCategoria(txtCategoria.getText());
         categom.setDescripcion(txtdescripcion.getText());
+        
+        if(cliente.modificarCategoria(categom.getIdCategoria(), categom.getCategoria(), categom.getDescripcion())){
+            JOptionPane.showMessageDialog(this, "Categoria modificada exitosamente.");
+            limpiar();
+            llenarTabla();
+        }else{
+            JOptionPane.showMessageDialog(this, "Ocurrio un error, la categoria no pudo ser modificada.");
+        }
+        limpiar();
     }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void tblDescripcionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDescripcionMouseClicked
+        int fila = tblDescripcion.getSelectedRow();
+        int id = Integer.parseInt(tblDescripcion.getValueAt(fila, 0).toString());
+        idCategoria = id;
+        txtCategoria.setText(tblDescripcion.getValueAt(fila, 1).toString());
+        txtdescripcion.setText(tblDescripcion.getValueAt(fila, 2).toString());
+    }//GEN-LAST:event_tblDescripcionMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
