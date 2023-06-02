@@ -22,7 +22,7 @@ public class L_Usuarios {
         int confirmacion = 0;
         try (Connection conexion = Conexion.obtenerConexion();) {
     
-    String procedimiento = "{call sp_agregarusuario(?, ?, ?, ?, ?, ?, ?)}";
+    String procedimiento = "{call sp_agregarusuarios(?, ?, ?, ?, ?, ?, ?)}";
     CallableStatement llamada = conexion.prepareCall(procedimiento);
     
      llamada.setString(1,objUsuario.getNombreUsuario());

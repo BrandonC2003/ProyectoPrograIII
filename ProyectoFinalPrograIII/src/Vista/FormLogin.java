@@ -7,6 +7,8 @@ package Vista;
 
 import java.awt.Color;
 import javax.swing.JOptionPane;
+import webservicebar.WebServiceBar;
+import webservicebar.WebServiceBar_Service;
 
 /**
  *

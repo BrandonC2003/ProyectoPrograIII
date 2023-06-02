@@ -102,6 +102,7 @@ public class FormBuscarVenta extends javax.swing.JFrame {
         int fila = jTable1.getSelectedRow();
         int id = Integer.parseInt(jTable1.getValueAt(fila, 0).toString());
         envD.transferirDatos(id);
+        this.dispose();
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void llenarTabla(){
