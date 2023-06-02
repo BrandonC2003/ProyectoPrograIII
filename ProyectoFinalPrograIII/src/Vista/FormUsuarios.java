@@ -228,7 +228,7 @@ public class FormUsuarios extends javax.swing.JPanel {
         usuario.setNombreUsuario(txfUsuario.getText());
         usuario.setNombre(txfNombre.getText());
         usuario.setApellido(txfApellido.getText());
-        usuario.setClave(passClave.getPassword().toString());
+        usuario.setClave(new String(passClave.getPassword()));
         usuario.setTelefono(txfTelefono.getText());
         usuario.setEstado(chbActivo.isSelected() ? 1 : 0);
         usuario.setNivel(obtenerNivel());
