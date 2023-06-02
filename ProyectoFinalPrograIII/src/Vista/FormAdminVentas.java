@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import webservicebar.DetalleVenta;
+
 /**
  *
  * @author brand
@@ -28,6 +29,7 @@ public class FormAdminVentas extends javax.swing.JPanel implements ITransferDtVe
     WebServiceBar_Service servicio;
     WebServiceBar cliente;
     DetalleVenta detalles;
+
     public FormAdminVentas() {
         initComponents();
         servicio = new WebServiceBar_Service();
@@ -50,23 +52,25 @@ public class FormAdminVentas extends javax.swing.JPanel implements ITransferDtVe
         llenarTabla(id);
         detalles.setIdVenta(id);
     }
-    private void limpiar(){
+
+    private void limpiar() {
         txtProducto.setText("");
         spnCantidad.setValue(0);
         detalles.setIdDetalle(0);
     }
-    
-    private void llenarTabla(int id){
+
+    private void llenarTabla(int id) {
         List<VwDetalleVentas> detalles = new ArrayList<VwDetalleVentas>();
-        
+
         detalles = cliente.buscarVenta(id);
-        
+
         model.setRowCount(0);
-        for(VwDetalleVentas dt : detalles){
-            model.addRow(new Object[]{dt.getIdDetalle(),dt.getIdProducto(),dt.getProduco(),dt.getCantidad(),dt.getIdVenta(),dt.getPrecio(),dt.getDescuento()});
+        for (VwDetalleVentas dt : detalles) {
+            model.addRow(new Object[]{dt.getIdDetalle(), dt.getIdProducto(), dt.getProduco(), dt.getCantidad(), dt.getIdVenta(), dt.getPrecio(), dt.getDescuento()});
         }
         jTable2.setModel(model);
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -114,6 +118,11 @@ public class FormAdminVentas extends javax.swing.JPanel implements ITransferDtVe
 
         btnEliminar.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -186,7 +195,7 @@ public class FormAdminVentas extends javax.swing.JPanel implements ITransferDtVe
 
     private void btnSelectVenta2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectVenta2ActionPerformed
         FormBuscarVenta bv = new FormBuscarVenta(this);
-        
+
         bv.setVisible(true);
     }//GEN-LAST:event_btnSelectVenta2ActionPerformed
 
@@ -194,30 +203,48 @@ public class FormAdminVentas extends javax.swing.JPanel implements ITransferDtVe
         int fila = jTable2.getSelectedRow();
         detalles.setIdDetalle(Integer.parseInt(jTable2.getValueAt(fila, 0).toString()));
         detalles.setIdProducto(Integer.parseInt(jTable2.getValueAt(fila, 1).toString()));
-        String nombreProducto = jTable2.getValueAt(fila,2).toString();
+        String nombreProducto = jTable2.getValueAt(fila, 2).toString();
         int cantidadProd = Integer.parseInt(jTable2.getValueAt(fila, 3).toString());
-        
+
         txtProducto.setText(nombreProducto);
         spnCantidad.setValue(cantidadProd);
     }//GEN-LAST:event_jTable2MouseClicked
 
     private void btnModifcarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifcarActionPerformed
-        if(detalles.getIdDetalle() == 0){
-            JOptionPane.showMessageDialog(this,"Tienes que seleccionar un detalle de venta para poder editarlo");
-        }else{
+        if (detalles.getIdDetalle() == 0) {
+            JOptionPane.showMessageDialog(this, "Tienes que seleccionar un detalle de venta para poder editarlo");
+        } else {
             detalles.setCantidad(Integer.parseInt(spnCantidad.getValue().toString()));
-        
-            if (cliente.modificarDetalleVenta(detalles)){
-                JOptionPane.showMessageDialog(this,"El detalle de venta fue actualizado correctamente.");
+
+            if (cliente.modificarDetalleVenta(detalles)) {
+                JOptionPane.showMessageDialog(this, "El detalle de venta fue actualizado correctamente.");
                 limpiar();
                 llenarTabla(detalles.getIdVenta());
-            }else{
-                JOptionPane.showMessageDialog(this,"Ocurrio un error, la cantidad de productos no es suficiente para poder realizar esta venta.");
+            } else {
+                JOptionPane.showMessageDialog(this, "Ocurrio un error, la cantidad de productos no es suficiente para poder realizar esta venta.");
             }
         }
     }//GEN-LAST:event_btnModifcarActionPerformed
 
-    
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        if (detalles.getIdDetalle() == 0) {
+            JOptionPane.showMessageDialog(this, "Tienes que seleccionar un detalle de venta para poder eliminarlo");
+        } else {
+            int confirm = JOptionPane.showConfirmDialog(this, "¿Estás seguro de eliminar este detalle de venta?", "Confirmación", JOptionPane.YES_NO_OPTION);
+            if (confirm == JOptionPane.YES_OPTION) {
+                if (cliente.eliminarDetalleVenta(detalles.getIdDetalle())) {
+                    JOptionPane.showMessageDialog(this, "El detalle de venta fue eliminado.");
+                    limpiar();
+                    llenarTabla(detalles.getIdVenta());
+                } else {
+                    JOptionPane.showMessageDialog(this, "Ocurrio un error al eliminar el detalle de venta.");
+                }
+            }
+
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnModifcar;
